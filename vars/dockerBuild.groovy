@@ -1,4 +1,5 @@
 def call(Map buildParams) {
+    
+    def dockerImage = docker.build("${buildParams.imageName}":"${buildParams.versionTag}")
 
-    dockerImage = docker.build(buildParams.imageName:buildParams.versionTag)
 }
