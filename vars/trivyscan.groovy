@@ -1,5 +1,7 @@
-def call(Map scanimage) {
-    
-    def dockerImage = docker.trivy("${scanimage.imageName}:${scanimage.versionTag}")
+def call(String imageNameAndTag) {
+    def command = "sudo trivy image ${imageNameAndTag}"
+    def trivyOutput = sh(script: command, returnStdout: true).trim()
 
+    echo "Trivy Scan Results:"
+    echo trivyOutput
 }
