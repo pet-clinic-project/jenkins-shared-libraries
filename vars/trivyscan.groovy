@@ -1,7 +1,7 @@
-def call(String imageNameAndTag) {
-    def command = "trivy image ${imageNameAndTag}"
-    def trivyOutput = sh(script: command, returnStdout: true).trim()
+def call (map scanParams) {
+    def fullImageName = "${scanParams.imageName}:${scanParams.imageVersion}"
+    def trivyCommand = "trivy image ${fullImageName}"
 
     echo "Trivy Scan Results:"
-    echo trivyOutput
+    sh trivyCommand
 }
