@@ -1,6 +1,6 @@
-def call(Map scanParams) {
-    def fullImageName = "${scanParams.imageName}:${scanParams.imageVersion}"
-    def dockerImage = "trivy image ${fullImageName}"
+def call(Map buildParams) {
+
+    def dockerImage = trivy.image("${buildParams.imageName}:${buildParams.versionTag}")
 
     echo "Running command: ${dockerImage}"
 
