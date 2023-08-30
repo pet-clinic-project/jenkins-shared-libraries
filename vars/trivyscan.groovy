@@ -1,7 +1,7 @@
-def call(Map buildParams) {
+def call(String imageNameAndTag) {
+    def command = "sudo trivy image ${imageNameAndTag}"
+    def trivyOutput = sh(script: command, returnStdout: true).trim()
 
-    def dockerImage = trivy.image("${buildParams.imageName}:${buildParams.versionTag}")
-
-    echo "Running command: ${dockerImage}"
-
+    echo "Trivy Scan Results:"
+    echo trivyOutput
 }
