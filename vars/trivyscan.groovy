@@ -1,4 +1,4 @@
-def call (map scanParams) {
+def call (Map scanParams) {
     def fullImageName = "${scanParams.imageName}:${scanParams.imageVersion}"
     def trivyCommand = "trivy image ${fullImageName}"
 
