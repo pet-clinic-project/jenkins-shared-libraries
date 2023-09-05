@@ -1,8 +1,8 @@
-import globalVariables.*
+@Library('jenkins-shared-library@develop') import globalVariables
 
 def call() {
     def dockerFilePath = 'Dockerfile'
-    def hadolintCommand = "docker run --rm -i hadolint/hadolint:${hadolintVersion} < ${dockerFilePath}"
+    def hadolintCommand = "docker run --rm -i hadolint/hadolint:${globalVariables.hadolintVersion} < ${dockerFilePath}"
 
     def hadolintOutput = sh(script: hadolintCommand, returnStatus: true)
 
