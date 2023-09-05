@@ -1,3 +1,1 @@
-def hadolintVersion = "v2.7.0"
-
-return this
+def hadolintVersion = 'v2.7.0'
