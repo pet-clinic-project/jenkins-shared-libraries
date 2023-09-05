@@ -1,5 +1,3 @@
-@Library('jenkins-shared-library@develop')
-
 import globalVariables
 
 def call() {
