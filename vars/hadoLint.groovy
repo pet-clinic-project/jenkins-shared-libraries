@@ -1,4 +1,6 @@
-import globalVariables.groovy
+@Library('jenkins-shared-library@develop')
+
+import globalVariables
 
 def call() {
     def dockerFilePath = 'Dockerfile'
