@@ -1,4 +1,6 @@
-@Library('jenkins-shared-library@develop') import globalVariables
+@Library('jenkins-shared-library@develop')
+
+import globalVariables.groovy
 
 def call() {
     def dockerFilePath = 'Dockerfile'
@@ -8,5 +10,5 @@ def call() {
 
     echo "Hadolint Output: ${hadolintOutput}"
 
-}
 
+}
