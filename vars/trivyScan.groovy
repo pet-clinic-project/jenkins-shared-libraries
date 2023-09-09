@@ -1,8 +1,7 @@
-def call(String imageNameAndTag) {
-    def resourcePath = "${JENKINS_HOME}/workspace/${JOB_NAME}@libs/resources/trivy/html.tpl"
-    def templateContent = readFileFromWorkspace(resourcePath)
+def call(String imageNameAndTag, String htmlTemplate) {
+    def htmlTemplate = htmlTemplate.replace("'", "\\'")
 
-    def command = "trivy image --format template --template '@html.tpl' -o report.html ${imageNameAndTag}"
+    def command = "trivy image --format template --template '{{${htmlTemplate}}}' -o report.html ${imageNameAndTag}"
     def trivyOutput = sh(script: command, returnStdout: true).trim()
 
     echo "Trivy Scan Results:"
