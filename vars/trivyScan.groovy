@@ -1,7 +1,10 @@
 def call(String imageNameAndTag) {
-    def htmlTemplate = libraryResource("trivy/html.tpl")
+    script {
+                    def tplContent = libraryResource 'trivy/html.tpl'
+                    writeFile file: '/home/ubuntu/html.tpl', text: tplContent
+                }
 
-    def command = "trivy image --format template --template '@${htmlTemplate}' -o report.html ${imageNameAndTag}"
+    def command = "trivy image --format template --template '@/home/ubuntu/html.tpl' -o report.html ${imageNameAndTag}"
     def trivyOutput = sh(script: command, returnStdout: true).trim()
 
     echo "Trivy Scan Results:"
