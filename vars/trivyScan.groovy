@@ -1,4 +1,4 @@
-def call(String imageNameAndTag, String htmlTemplate) {
+def call(String imageNameAndTag) {
     def htmlTemplate = libraryResource("trivy/html.tpl")
 
     def command = "trivy image --format template --template \"${htmlTemplate}\" -o report.html ${imageNameAndTag}"
