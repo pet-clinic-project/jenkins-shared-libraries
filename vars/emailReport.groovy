@@ -5,6 +5,4 @@ def call(String reportPath, String imageNameAndTag ,String recipient) {
         to: "${recipient}",
         attachmentsPattern: "${reportPath}"
     )
-
-    email.send()
 }
