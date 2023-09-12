@@ -4,7 +4,7 @@ def call(String imageNameAndTag) {
                     writeFile file: '/home/ubuntu/html.tpl', text: tplContent
                 }
 
-    def command = "trivy image --format template --template '@/home/ubuntu/html.tpl' -o /home/ubuntu/trivy-report.html ${imageNameAndTag}"
+    def command = "trivy image --format template --template '@/home/ubuntu/html.tpl' -o /tmp/trivy-report.html ${imageNameAndTag}"
     def trivyOutput = sh(script: command, returnStdout: true).trim()
 
     echo "Trivy Scan Results:"
