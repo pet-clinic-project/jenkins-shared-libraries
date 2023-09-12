@@ -6,6 +6,5 @@ def call(String reportPath, String imageNameAndTag ,String recipient) {
         attachments: "${reportPath}"
     )
 
-  // Send the email.
     email.send()
 }
