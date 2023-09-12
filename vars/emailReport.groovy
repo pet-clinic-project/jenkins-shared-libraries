@@ -3,7 +3,7 @@ def call(String reportPath, String imageNameAndTag ,String recipient) {
         subject: "Trivy Scan Report",
         body: "Attached is the Trivy scan report for ${imageNameAndTag}.",
         to: "${recipient}",
-        attachmentsPath: "${reportPath}"
+        attachmentPath: "${reportPath}"
     )
 
     email.send()
