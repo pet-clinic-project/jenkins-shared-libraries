@@ -1,7 +1,7 @@
 def emailReport(reportPath) {
   // Get the email address of the recipient.
     def recipient = "aswin@crunchops.com"
-
+    def reportPath = "/home/ubuntu/trivy-report.html"
   // Create a new email message.
     def email = emailext(
         subject: "Trivy Scan Report",
