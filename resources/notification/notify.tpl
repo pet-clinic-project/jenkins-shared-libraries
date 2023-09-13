@@ -17,15 +17,15 @@
   <tbody>
     <tr>
       <td>BUILD_URL</td>
-      <td id="build_url">[Your BUILD_URL here]</td>
+      <td id="build_url">[BUILD_URL]</td>
     </tr>
     <tr>
       <td>Triggered Url</td>
-      <td id="triggered_url">[Your Triggered Url here]</td>
+      <td id="triggered_url">[JOB_DISPLAY_URL]</td>
     </tr>
     <tr>
       <td>PR Details</td>
-      <td id="pr_details">[Your PR Details here]</td>
+      <td id="pr_details">[RUN_DISPLAY_URL]</td>
     </tr>
   </tbody>
 </table>
