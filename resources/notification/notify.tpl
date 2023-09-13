@@ -1,5 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<style type="text/css" data-inline="true">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Build from Jenkins</title>
+<style type="text/css">
 /*base css*/
 a{color:#4a72af}
 body{background-color:#e4e4e4}
@@ -13,10 +17,9 @@ p{font-size:12px;color:#444!important;font-family:"Lucida Grande","Lucida Sans",
 ol li img{display:inline;height:20px}
 /*div styles*/
 .news{text-align:center;padding-top:15px;}
-.content{width:720px;margin:0 auto;background-color:white}
+.content{width:720px;background-color:white;margin-left: auto; margin-right: auto ;}
 .round_border{margin-bottom:5px;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;margin-top:0;font-size:14px;padding:6px;border:1px solid #ccc}
-.status{background-color:<%= 
-            build.result.toString() == "SUCCESS" ? 'green' : 'red' %>;font-size:28px;font-weight:bold;color:white;width:720px;height:52px;margin-bottom:18px;text-align:center;vertical-align:middle;border-collapse:collapse;background-repeat:no-repeat}
+.status{background-color:green;font-size:28px;font-weight:bold;color:white;width:720px;height:52px;margin-bottom:18px;text-align:center;vertical-align:middle;border-collapse:collapse;background-repeat:no-repeat}
 .status .info{color:white!important;text-shadow:0 -1px 0 rgba(0,0,0,0.3);font-size:32px;line-height:36px;padding:8px 0}
 .main img{width:38px;margin-right:16px;height:38px}
 .main table{font-size:14px;}
@@ -26,6 +29,7 @@ ol li img{display:inline;height:20px}
 .bottom-message .designed{font-size:13px;color:#aaa;line-height:18px;font-style: italic;text-align:right}
 img.cartoon {width: 36px; display:inline}
 </style>
+</head>
 <body>
 	<div class="news">
 		<p>
@@ -33,9 +37,10 @@ img.cartoon {width: 36px; display:inline}
 		</p>
 		<br>
 	</div>
-<div class="content round_border">
+	<!-- news -->
+	<div class="content round_border">
 		<div class="status">
-			<p class="info">The build <%= build.result.toString().toLowerCase() %></p>
+			<p class="info">The build success</p>
 		</div>
 		<!-- status -->
 		<div class="main round_border">
@@ -43,25 +48,25 @@ img.cartoon {width: 36px; display:inline}
 				<tbody>
 					<tr>
 						<th>Project:</th>
-						<td>${project.name}</td>
+						<td>email-test</td>
 					</tr>
 					<tr>
-						<th>Build ${hudson.Util.xmlEscape(build.displayName)}:</th>
+						<th>Build #107</th>
 						<td><a
-							href="${rooturl}${build.url}">${rooturl}${build.url}</a></td>
+							href="http://localhost:7080/jenkins/job/email-test/107/">http://localhost:7080/jenkins/job/email-test/107/</a></td>
 					</tr>
 					<tr>
 						<th>Date of build:</th>
-						<td>${it.timestampString}</td>
+						<td>Thu, 22 Mar 2012 17:06:23 +0800</td>
 					</tr>
 					<tr>
 						<th>Build duration:</th>
-						<td>${build.durationString}</td>
+						<td>0.52 sec</td>
 					</tr>
 					<tr>
 						<th>Changes</th>
 						<td><a
-							href="${rooturl}${build.url}changes">${rooturl}${build.url}changes</a></td>
+							href="http://localhost:7080/jenkins/job/email-test/107/changes">http://localhost:7080/jenkins/job/email-test/107/changes</a></td>
 					</tr>
 					<tr>
 						<td colspan="2">&nbsp;</td>
@@ -72,40 +77,31 @@ img.cartoon {width: 36px; display:inline}
 			
 		</div>
 		<!-- main -->
-        <% def artifacts = build.artifacts
-            if(artifacts != null && artifacts.size() > 0) { %>
-        
+
 		<div class="artifacts round_border">
 			<b>Build Artifacts:</b>
 			<ul>
-            <% 		artifacts.each() { f -> %>		
-                <li><a href="${rooturl}${build.url}artifact/${f}">${f}</a></li>
-            <%		} %>                
+				<li><a href="#">jenkins/groovy-html-orig.template</a></li>
+				<li><a href="#">jenkins/groovy-html.template</a></li>
+				<li><a href="#">jenkins/groovy-html2.template</a></li>
+				<li><a href="#">jenkins/groovy-html3.template</a></li>
 			</ul>
 		</div>
-        <% } %>
-        <!-- artifacts -->
-
-        <% def changeSet = build.changeSet
-        if(changeSet != null) {
-            def hadChanges = false
-            def count = 0 %>
-            
+		<!-- artifacts -->
 		<div class="details round_border">
 			<b>Changes in detail:</b>
 			<ol>
-            <% 	changeSet.each() { cs ->
-                    hadChanges = true
-                    def aUser = cs.author %>
-				<li>${cs.msgAnnotated} (${aUser.displayName})
-                    (<a href="${rooturl}${build.url}changes#detail${count}">detail</a>)</li>
-            <%      count ++
-                }  %>
+				<li>add groovy template more (larry.cai)(<a href="http://localhost:7080/jenkins/job/email-test/107/changes#detail0">detail</a>)
+				</li>
+				<li>update to first stable version (larry.cai)(<a href="http://localhost:7080/jenkins/job/email-test/107/changes#detail1">detail</a>)
+				</li>
+				<li>add image link to its id (larry.cai)(<a href="http://localhost:7080/jenkins/job/email-test/107/changes#detail2">detail</a>)
+				</li>
 			</ol>
 		</div>
-        <% } %>
 		<!-- details -->
-    </div>
+		<div class="round_border">...</div>
+	</div>
 	<!-- content -->
 
     <table class="bottom-message" align="center">
@@ -116,7 +112,7 @@ img.cartoon {width: 36px; display:inline}
 				src="http://www.gravatar.com/avatar/8f1c16c8fb46d3f829fae4022fab8433?s=128&d=identicon&r=PG"/>
             </td>        
         	<td class="message">You are receiving this email because you
-				are relavent with this build<br>
+				are relevant with this build<br>
 				<p>
 					<a href="#">support team</a> | <a href="#">Gerrit server</a>
 				</p>
@@ -127,5 +123,7 @@ img.cartoon {width: 36px; display:inline}
         </tr>
 	</table>
 	<!-- bottom message -->
+    
 
 </body>
+</html>
