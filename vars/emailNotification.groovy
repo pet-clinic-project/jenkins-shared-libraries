@@ -1,12 +1,13 @@
 def sendEmailNotification(String pipelineStatus, String recipientEmail) {
+    def buildNotification = libraryResource 'notification/notify.tpl'
     def subject, body
 
     if (pipelineStatus == 'success') {
         subject = "Terraform Pipeline Success"
-        body = "The Terraform pipeline has successfully completed."
+        body = "${buildNotification}"
     } else if (pipelineStatus == 'failure') {
         subject = "Terraform Pipeline Failed"
-        body = "The Terraform pipeline has failed. Please investigate."
+        body = ""${buildNotification}""
     } else {
         subject = "Terraform Pipeline Status: $pipelineStatus"
         body = "The Terraform pipeline is in an unknown status: $pipelineStatus"
