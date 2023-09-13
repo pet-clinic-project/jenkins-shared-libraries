@@ -51,17 +51,25 @@
 <table>
   <thead>
     <tr>
-      <th>Variable Name</th>
+      <th>Name</th>
       <th>Value</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Build URL</td>
+      <td>Build_Number</td>
+      <td id="build_number">${BUILD_NUMBER}</td>
+    </tr>
+    <tr>
+      <td>Project_Name</td>
+      <td id="project_name">${PROJECT_NAME}</td>
+    </tr>
+    <tr>
+      <td>Build_URL</td>
       <td id="build_url"><a href="${BUILD_URL}" target="_blank">${BUILD_URL}</a></td>
     </tr>
     <tr>
-      <td>Triggered Url</td>
+      <td>Triggered_Url</td>
       <td id="triggered_url"><a href="${JOB_DISPLAY_URL}" target="_blank">${JOB_DISPLAY_URL}</a></td>
     </tr>
     <tr>
