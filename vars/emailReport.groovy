@@ -1,8 +1,12 @@
 def call(String reportPath, String imageNameAndTag ,String recipient) {
-    def trivyNotification = libraryResource 'notification/trivyNotify.tpl'
     def email = emailext(
         subject: "${PROJECT_NAME} - ${BUILD_NUMBER}",
-        body:  "${trivyNotification}",
+        body:  """<html><body>
+                    <p>Click <a href="${BUILD_URL}">here</a> to view the build details.</p>
+                    <pre>
+                    ${readFile(reportPath)}
+                    </pre>
+                </body></html>""",
         to: "${recipient}",
     )
 }
