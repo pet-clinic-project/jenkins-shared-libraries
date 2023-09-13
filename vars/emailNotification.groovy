@@ -17,7 +17,6 @@ def sendEmailNotification(String pipelineStatus, String recipientEmail) {
         subject: subject,
         body: body,
         recipientProviders: [[$class: 'CulpritsRecipientProvider']],
-        to: recipientEmail,
-        attachLog: true
+        to: recipientEmail
     )
 }
