@@ -16,16 +16,16 @@
   </thead>
   <tbody>
     <tr>
-      <td>BUILD_URL</td>
-      <td id="build_url">[BUILD_URL]</td>
+      <td>Build_URL</td>
+      <td id="build_url"><a href="${BUILD_URL}">${BUILD_URL}</a></td>
     </tr>
     <tr>
       <td>Triggered Url</td>
-      <td id="triggered_url">[JOB_DISPLAY_URL]</td>
+      <td id="triggered_url"><a href="${JOB_DISPLAY_URL}">${JOB_DISPLAY_URL}</a></td>
     </tr>
     <tr>
       <td>PR Details</td>
-      <td id="pr_details">[RUN_DISPLAY_URL]</td>
+      <td id="pr_details"><a href="${RUN_DISPLAY_URL}">${RUN_DISPLAY_URL}</a></td>
     </tr>
   </tbody>
 </table>
