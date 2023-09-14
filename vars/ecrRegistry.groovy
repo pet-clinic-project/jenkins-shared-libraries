@@ -15,7 +15,7 @@ def ecrLogin(ecrRepository, awsRegion) {
 
 def dockerTagAndPush(imageName, ecrRepository, versionTag) {
   def sourceImage = "$imageName:$versionTag"
-  def targetImage = "$ecrRepository/$imageName:$versionTag"
+  def targetImage = "$ecrRepository/$imageName-$versionTag"
 
   def dockerTagCommand = "docker tag $sourceImage $targetImage"
   def dockerPushCommand = "docker push $targetImage"
