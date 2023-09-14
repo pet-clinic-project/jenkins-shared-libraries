@@ -12,7 +12,7 @@ def call(Map params) {
     checkovScan(customPolicy, checkovPolicyDir)
 }
 def checkovScan(custom_policy, checkov_policy_dir) {
-    def checkovScanCommand = "checkov -d ${WORKSPACE} --external-checks-dir $checkov_policy_dir --check $custom_policy --hard-fail-on $custom_policy > checkov-report.html"
+    def checkovScanCommand = "checkov -d ${WORKSPACE} --external-checks-dir $checkov_policy_dir --check $custom_policy --hard-fail-on $custom_policy"
     sh checkovScanCommand
 }
 
