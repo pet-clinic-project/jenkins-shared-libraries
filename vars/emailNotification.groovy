@@ -4,10 +4,10 @@ def sendEmailNotification(String pipelineStatus, String recipientEmail) {
 
     if (pipelineStatus == 'success') {
         subject = "Terraform Pipeline Success"
-        body = "${buildNotification}/${JOB_BASE_NAME}"
+        body = "${buildNotification}/"
     } else if (pipelineStatus == 'failure') {
         subject = "Terraform Pipeline Failed"
-        body = "${buildNotification}/${JOB_BASE_NAME}"
+        body = "${buildNotification}"
     } else {
         subject = "Terraform Pipeline Status: $pipelineStatus"
         body = "The Terraform pipeline is in an unknown status: $pipelineStatus"

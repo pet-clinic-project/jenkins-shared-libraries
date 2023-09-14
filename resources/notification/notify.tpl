@@ -62,7 +62,7 @@
     </tr>
     <tr>
       <td>Project_Name</td>
-      <td id="project_name">${PROJECT_NAME}</td>
+      <td id="project_name">${PROJECT_NAME}/${JOB_NAME}</td>
     </tr>
     <tr>
       <td>Build_URL</td>
