@@ -1,6 +1,4 @@
 def call(Map params) {
-    def projectDirectory = params.projectDirectory
-    def planFileJson = params.planFileJson
     def customPolicy = params.customPolicy
     // Create the 'checkov_policy' directory in the Jenkins workspace
     def checkovPolicyDir = "${env.WORKSPACE}/custom_policy"
@@ -11,10 +9,10 @@ def call(Map params) {
     // Write the policy contents to files in your workspace
     writeFile file: "${checkovPolicyDir}/DockerLatestTag.py", text: dockerPolicyContent
     writeFile file: "${checkovPolicyDir}/__init__.py", text: initPolicyContent
-    checkovScan(projectDirectory, planFileJson, customPolicy, checkovPolicyDir)
+    checkovScan(customPolicy, checkovPolicyDir)
 }
-def checkovScan(project_dir, plan_file_json, custom_policy, checkov_policy_dir) {
-    def checkovScanCommand = "checkov -d . --external-checks-dir $checkov_policy_dir --check $custom_policy --hard-fail-on $custom_policy > checkov-report.html"
+def checkovScan(custom_policy, checkov_policy_dir) {
+    def checkovScanCommand = "checkov -d ${WORKSPACE} --external-checks-dir $checkov_policy_dir --check $custom_policy --hard-fail-on $custom_policy > checkov-report.html"
     sh checkovScanCommand
 }
 
