@@ -3,7 +3,7 @@ def call() {
     def hadolintCommand = "hadolint ${dockerFilePath}"
 
     // Run the hadolint command and capture both exit status and output
-    def hadolintOutput = sh(script: hadolintCommand, returnStatus: true, returnStdout: true)
+    def hadolintOutput = sh(script: hadolintCommand, returnStatus: true)
 
     // Check if there are any warning messages in the hadolint output
     def hasWarnings = hadolintOutput.contains("warning")
