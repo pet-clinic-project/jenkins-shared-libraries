@@ -4,8 +4,8 @@ def call(Map params) {
    terraformValidate(projectDirectory)
 }
 
-def terraformValidate(project_dir) {
-   dir(project_dir) {
+def terraformValidate(directory) {
+   dir(directory) {
       def terraformValidateCommand = "terraform validate"
       sh terraformValidateCommand 
    }   

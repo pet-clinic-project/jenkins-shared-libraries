@@ -2,10 +2,10 @@ def call(Map params) {
    def projectDirectory = params.projectDirectory
    def variableFile = params.variableFile
    def planFile = params.planFile
-   def planFileJson = params.planFileJson
+   def redirectPlanFile = params.redirectPlanFile
 
    terraformPlan(projectDirectory, variableFile, planFile)
-   terraformShow(projectDirectory, planFile, planFileJson)
+   terraformShow(projectDirectory, planFile, redirectPlanFile)
 }
 
 def terraformPlan(project_dir, var_file, plan_file) {
@@ -15,9 +15,9 @@ def terraformPlan(project_dir, var_file, plan_file) {
    }   
 }
 
-def terraformShow(project_dir, plan_file, plan_file_json) {
+def terraformShow(project_dir, plan_file, redir_plan_file) {
    dir(project_dir) {
-      def terraformShowCommand = "terraform show -json $plan_file | jq > $plan_file_json"
+      def terraformShowCommand = "terraform show -json $plan_file | jq > $redir_plan_file"
       sh terraformShowCommand
    }   
 }
