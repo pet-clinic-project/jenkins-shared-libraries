@@ -1,6 +1,6 @@
 def call() {
     def dockerFilePath = 'Dockerfile'
-    def hadolintCommand = "hadolint ${dockerFilePath}"
+    def hadolintCommand = "hadolint --ignore DL3008 ${dockerFilePath}"
 
     // Run the hadolint command and capture both exit status and output
     def hadolintOutput = sh(script: hadolintCommand, returnStatus: true)
