@@ -1,17 +1,12 @@
 def call() {
     def dockerFilePath = 'Dockerfile'
-    def hadolintCommand = "hadolint --ignore DL3008 --ignore DL3015 --ignore DL3047 ${dockerFilePath}"
+    def hadolintCommand = "hadolint ${dockerFilePath}"
 
     def hadolintOutput = sh(script: hadolintCommand, returnStatus: true)
 
-    echo "Hadolint Output: ${hadolintOutput}"
+    echo "Hadolint Exit Code: ${hadolintOutput}"
 
-    if (hadolintExitStatus == 0) {
-        echo "Hadolint successfully passed."
-    } else {
-        echo "Hadolint returned a non-zero exit status: ${hadolintExitStatus}"
-        // You can add additional actions or error handling here if needed
+    if (hadolintOutput != 0) {
+        error "Hadolint failed with exit code ${hadolintOutput}"
     }
-
-
 }
