@@ -1,4 +1,4 @@
-def runMavenBuild() {
+def call() {
     def mvnCommand = 'mvn clean package -U'
     def exitCode = sh(script: mvnCommand, returnStatus: true)
 
