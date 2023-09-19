@@ -9,10 +9,12 @@ def call(Map params) {
 
     // Load the Python policy files from the shared library resources
     def securityGroupPolicyContent = libraryResource('checkov_policy/SecurityGroupInboundCIDR.py').trim()
+    def awsResourceCustomTags = libraryResource('checkov_policy/AWSResourceTags.py').trim()
     def initPolicyContent = libraryResource('checkov_policy/__init__.py').trim()
 
     // Write the policy contents to files in your workspace
     writeFile file: "${checkovPolicyDir}/security_group_policy.py", text: securityGroupPolicyContent
+    writeFile file: "${checkovPolicyDir}/aws_resource_tags.py", text: awsResourceCustomTags
     writeFile file: "${checkovPolicyDir}/__init__.py", text: initPolicyContent
 
     checkovScan(projectDirectory, planFileJson, customPolicy, checkovPolicyDir)
