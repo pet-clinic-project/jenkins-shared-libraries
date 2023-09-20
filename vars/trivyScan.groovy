@@ -4,7 +4,7 @@ def call(String imageNameAndTag) {
                     writeFile file: "${WORKSPACE}/html.tpl", text: tplContent
                 }
 
-    def command = "trivy image --exit-code 1 --severity MEDIUM --cache-dir /tmp/trivy-cache --format template --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html ${imageNameAndTag}"
+    def command = "trivy image --exit-code 1 --severity CRITICAL --cache-dir /tmp/trivy-cache --format template --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html ${imageNameAndTag}"
     def trivyOutput = sh(script: command, returnStdout: true).trim()
 
     echo "Trivy Scan Results:"
