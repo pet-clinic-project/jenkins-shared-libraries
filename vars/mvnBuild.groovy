@@ -1,5 +1,5 @@
 def call() {
-    def mvnCommand = 'mvn clean install -Dmaven.checkstyle.skip=true'
+    def mvnCommand = 'mvn clean install -Dcheckstyle.skip'
     def exitCode = sh(script: mvnCommand, returnStatus: true)
 
     if (exitCode != 0) {
