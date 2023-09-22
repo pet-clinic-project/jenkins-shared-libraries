@@ -5,7 +5,12 @@ class EnsureTagsHaveValues(BaseResourceCheck):
     def __init__(self):
         name = "Ensure Tags Have Correct Values"
         id = "CUSTOM_AWS_111"
-        supported_resources = ("aws_security_group",)
+        supported_resources = (
+            "aws_security_group", "aws_s3_bucket", "aws_dynamodb_table", "aws_instance",
+            "aws_ecr_repository", "aws_iam_role", "aws_internet_gateway", "aws_route_table", 
+            "aws_route", "aws_subnet", "aws_vpc",
+        )
+
         categories = [CheckCategories.CONVENTION]
         guideline = "Ensure that the 'CostCenter' and 'Owner' tags have their respective values for all resources."
         super().__init__(name=name, id=id, categories=categories, supported_resources=supported_resources, guideline=guideline)
