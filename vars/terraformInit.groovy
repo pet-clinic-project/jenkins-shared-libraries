@@ -1,21 +1,22 @@
 def call(Map params) {
    def projectDirectory = params.projectDirectory
-   def variableFile = params.variableFile
+   def tfstateFile = params.tfstateFile
+   def tfvarsFile = params.tfvarsFile
 
-   terraformInit(projectDirectory, variableFile)
+   terraformInit(projectDirectory, tfstateFile, tfvarsFile)
 }
 
-def terraformInit(project_dir, var_file) {
+def terraformInit(project_dir, tfstateFile, tfvarsFile) {
    dir(project_dir) {
       def terraformInitCommand = """
         terraform init \\
-          -backend-config="key=dev/jenkins_agent.tfstate" \\
+          -backend-config="key=dev/${tfstateFile}" \\
           -backend-config="bucket=dcube-terraform-state" \\
           -backend-config="region=us-west-2" \\
           -backend-config="dynamodb_table=terraform-state-lock" \\
-          -var-file=../../vars/infra/dev/jenkins-agent.tfvars
+          -var-file=../../vars/infra/dev/${tfvarsFile}
       """
-      
+
       sh terraformInitCommand
    }
 }
