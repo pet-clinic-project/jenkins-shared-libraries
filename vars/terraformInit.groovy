@@ -6,15 +6,16 @@ def call(Map params) {
 }
 
 def terraformInit(project_dir, var_file) {
-   dir(project_dir, var_file) {
+   dir(project_dir) {
       def terraformInitCommand = """
-         terraform init \
-         -backend-config="key=dev/vpc.tfstate" \
-         -backend-config="bucket=dcube-terraform-state" \
-         -backend-config="region=us-west-2" \
-         -backend-config="dynamodb_table=terraform-state-lock" \
-         -var-file=../../vars/infra/dev/${var_file}
+        terraform init \\
+          -backend-config="key=dev/jenkins_agent.tfstate" \\
+          -backend-config="bucket=dcube-terraform-state" \\
+          -backend-config="region=us-west-2" \\
+          -backend-config="dynamodb_table=terraform-state-lock" \\
+          -var-file=../../vars/infra/dev/jenkins-agent.tfvars
       """
-      sh terraformInitCommand.trim()
+      
+      sh terraformInitCommand
    }
 }
