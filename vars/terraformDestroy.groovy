@@ -1,13 +1,22 @@
 def call(Map params) {
    def projectDirectory = params.projectDirectory
+   def tfstateFile = params.tfstateFile
    def variableFile = params.variableFile
 
-   terraformDestroy(projectDirectory, variableFile)
+   terraformInit(projectDirectory, tfstateFile, tfvarsFile)
 }
 
-def terraformDestroy(project_dir, var_file) {
+def terraformInit(project_dir, tfstateFile, var_file) {
    dir(project_dir) {
-      def terraformDestroyCommand = "terraform destroy -var-file=../../vars/infra/dev/$var_file --auto-approve"
-      sh terraformDestroyCommand 
-   }   
+      def terraformInitCommand = """
+        terraform destroy \\
+          -backend-config="key=dev/${tfstateFile}" \\
+          -backend-config="bucket=dcube-terraform-state" \\
+          -backend-config="region=us-west-2" \\
+          -backend-config="dynamodb_table=terraform-state-lock" \\
+          -var-file=../../vars/infra/dev/${var_file} --auto-approve
+      """
+
+      sh terraformInitCommand
+   }
 }
