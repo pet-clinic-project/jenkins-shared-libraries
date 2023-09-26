@@ -6,9 +6,9 @@ def call(Map params) {
    terraformInit(projectDirectory, tfstateFile, tfvarsFile)
 }
 
-def terraformInit(project_dir, tfstateFile, var_file) {
+def terraformDestroy(project_dir, tfstateFile, var_file) {
    dir(project_dir) {
-      def terraformInitCommand = """
+      def terraformDestroyCommand = """
         terraform destroy \\
           -backend-config="key=dev/${tfstateFile}" \\
           -backend-config="bucket=dcube-terraform-state" \\
@@ -17,6 +17,6 @@ def terraformInit(project_dir, tfstateFile, var_file) {
           -var-file=../../vars/infra/dev/${var_file} --auto-approve
       """
 
-      sh terraformInitCommand
+      sh terraformDestroyCommand
    }
 }
