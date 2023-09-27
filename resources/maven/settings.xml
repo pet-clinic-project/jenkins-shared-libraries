@@ -1,0 +1,35 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      https://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <localRepository/>
+  <interactiveMode/>
+  <usePluginRegistry/>
+  <offline/>
+  <pluginGroups/>
+
+  <servers/>
+
+  <mirrors/>
+
+  <proxies/>
+
+  <profiles>
+    <profile>
+      <id>jdk-17</id>
+      <activation>
+        <activeByDefault>true</activeByDefault> <!-- Make this profile active by default -->
+      </activation>
+      <properties>
+        <maven.compiler.source>17</maven.compiler.source> <!-- JDK source version -->
+        <maven.compiler.target>17</maven.compiler.target> <!-- JDK target version -->
+      </properties>
+    </profile>
+  </profiles>
+
+  <activeProfiles>
+    <activeProfile>jdk-17</activeProfile>
+  </activeProfiles>
+
+</settings>
