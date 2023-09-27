@@ -3,7 +3,7 @@ def call(Map params) {
    def tfstateFile = params.tfstateFile
    def variableFile = params.variableFile
 
-   terraformDestroy(projectDirectory, tfstateFile, tfvarsFile)
+   terraformDestroy(projectDirectory, tfstateFile, variableFile)
 }
 
 def terraformDestroy(project_dir, tfstateFile, var_file) {
