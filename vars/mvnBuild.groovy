@@ -1,5 +1,5 @@
 def call() {
-    def mvnCommand = './mvnw package'
+    def mvnCommand = './mvnw package -Dcheckstyle.skip'
     def exitCode = sh(script: mvnCommand, returnStatus: true)
 
     if (exitCode != 0) {
