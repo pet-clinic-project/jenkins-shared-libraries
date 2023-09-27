@@ -1,5 +1,5 @@
 def call() {
-    def mvnCommand = 'mvn test'
+    def mvnCommand = './mvnw test'
     def exitCode = sh(script: mvnCommand, returnStatus: true)
 
     if (exitCode != 0) {
