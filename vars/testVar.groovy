@@ -1,3 +1,4 @@
 def call() {
-    echo "Using global variable: ${org.example.YourGlobalVars.GLOBAL_VARIABLE}"
+
+    echo "Global variable value: ${src.GlobalVar.myGlobalVar}"
 }
