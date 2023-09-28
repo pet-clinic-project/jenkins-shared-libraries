@@ -1,4 +1,4 @@
 def call() {
 
-    echo "Global variable value: ${GlobalVar().myGlobalVar}"
+    echo "Global variable value: ${new GlobalVar().myGlobalVar}"
 }
