@@ -1,4 +1,4 @@
 def call() {
 
-    echo "Global variable value: ${GSlobalVar.myGlobalVar}"
+    echo "Global variable value: ${GlobalVar.myGlobalVar}"
 }
