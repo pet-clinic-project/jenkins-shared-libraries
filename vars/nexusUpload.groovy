@@ -1,7 +1,7 @@
 def call(String nexusUrl, String nexusRepository, String nexusCredentialsId, String jarFileName) {
     def credentials = credentials(nexusCredentialsId)
-    def nexusUsername = credentials.username
-    def nexusPassword = credentials.password
+    def nexusUsername = credentials.Username
+    def nexusPassword = credentials.Password
 
     def jarFile = findFiles(glob: 'target/*.jar').first()
 
