@@ -1,6 +1,6 @@
 package org.techiescamp
 
-class GlobalVar {
+class GlobalConfig {
     static String versionTag = "1.0"
 }
 
