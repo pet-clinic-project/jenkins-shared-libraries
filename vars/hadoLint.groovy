@@ -1,7 +1,10 @@
 def call() {
-    def hadolintConfigFile = libraryResource('hadolint/.hadolint.yaml')
 
-    def hadolintCommand = "hadolint --config ${hadolintConfigFile} Dockerfile"
+    def dockerFilePath = "${WORKSPACE}/Dockerfile"
+
+    def hadolintConfigFile = libraryResource "hadolint/.hadolint.yaml"
+
+    def hadolintCommand = "hadolint --config ${hadolintConfigFile} ${dockerFilePath}"
 
     def hadolintOutput = sh(script: hadolintCommand, returnStatus: true)
 
