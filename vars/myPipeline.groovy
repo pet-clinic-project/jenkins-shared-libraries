@@ -1,4 +1,6 @@
 import org.techiescamp.GlobalConfig
+import org.techiescamp.EndPoint
+import org.techiescamp.AwsConfig
 
 def call() {
     echo "Using global variable: ${GlobalConfig.versionTag}"
