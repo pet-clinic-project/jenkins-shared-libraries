@@ -1,21 +1,22 @@
+import org.techiescamp.GlobalConfig
+
 def call(Map params) {
-  def ecrRepository = params.ecrRepository 
-  def imageName = params.imageName 
-  def versionTag = params.versionTag 
-  def awsRegion = params.awsRegion
+  def imageName = params.imageName
+  def repoName = params.repoName
+  def buildName = params.buildName
   
-  ecrLogin(ecrRepository, awsRegion)
-  dockerTagAndPush(imageName, ecrRepository, versionTag)
+  ecrLogin()
+  dockerTagAndPush(imageName, repoName, buildName)
 }
 
-def ecrLogin(ecrRepository, awsRegion) {
-  def ecrLoginCommand = "aws ecr get-login-password --region $awsRegion | docker login --username AWS --password-stdin $ecrRepository"
+def ecrLogin() {
+  def ecrLoginCommand = "aws ecr get-login-password --region ${GlobalConfig.SubConfig.awsRegion} | docker login --username AWS --password-stdin ${GlobalConfig.SubConfig.ecrRegistry}"
   sh ecrLoginCommand
 }
 
-def dockerTagAndPush(imageName, ecrRepository, versionTag) {
-  def sourceImage = "$imageName:$versionTag"
-  def targetImage = "$ecrRepository:$imageName-$versionTag"
+def dockerTagAndPush(imageName, repoName, buildNumber) {
+  def sourceImage = "$imageName:${GlobalConfig.versionTag}.$buildNumber"
+  def targetImage = "${GlobalConfig.SubConfig.ecrRegistry}/$repoName:$imageName-${GlobalConfig.versionTag}.$buildNumber"
 
   def dockerTagCommand = "docker tag $sourceImage $targetImage"
   def dockerPushCommand = "docker push $targetImage"
