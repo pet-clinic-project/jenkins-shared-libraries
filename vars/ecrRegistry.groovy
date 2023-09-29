@@ -3,10 +3,9 @@ import org.techiescamp.GlobalConfig
 def call(Map params) {
   def imageName = params.imageName
   def repoName = params.repoName
-  def buildName = params.buildName
   
   ecrLogin()
-  dockerTagAndPush(imageName, repoName, buildName)
+  dockerTagAndPush(imageName, repoName)
 }
 
 def ecrLogin() {
@@ -14,9 +13,9 @@ def ecrLogin() {
   sh ecrLoginCommand
 }
 
-def dockerTagAndPush(imageName, repoName, buildNumber) {
-  def sourceImage = "$imageName:${GlobalConfig.versionTag}.$buildNumber"
-  def targetImage = "${GlobalConfig.SubConfig.ecrRegistry}/$repoName:$imageName-${GlobalConfig.versionTag}.$buildNumber"
+def dockerTagAndPush(imageName, repoName) {
+  def sourceImage = "$imageName:${GlobalConfig.versionTag}.${BUILD_NUMBER}"
+  def targetImage = "${GlobalConfig.SubConfig.ecrRegistry}/$repoName:$imageName-${GlobalConfig.versionTag}.${BUILD_NUMBER}"
 
   def dockerTagCommand = "docker tag $sourceImage $targetImage"
   def dockerPushCommand = "docker push $targetImage"
