@@ -1,4 +1,4 @@
-def call(String reportPath, String imageNameAndTag ,String recipient) {
+def call(String reportPath, String recipient) {
     def email = emailext(
         subject: "${JOB_NAME} - ${BUILD_NUMBER}",
         body:  """<html><body>
