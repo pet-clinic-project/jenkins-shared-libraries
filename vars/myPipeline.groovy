@@ -1,9 +1,9 @@
-import org.techiescamp.GlobalConfig
+import org.techiescamp
 
 def call() {
     echo "Using global variable: ${GlobalConfig.versionTag}"
-    echo "Using global variable: ${EndPoint.sonarEndPoint}"
-    echo "Using global variable: ${EndPoint.nexusEndPoint}"
-    echo "Using global variable: ${AwsConfig.awsRegion}"
-    echo "Using global variable: ${AwsConfig.ecrRegistry}"
+    echo "Using global variable: ${GlobalConfig.sonarEndPoint}"
+    echo "Using global variable: ${GlobalConfig.nexusEndPoint}"
+    echo "Using global variable: ${GlobalConfig.awsRegion}"
+    echo "Using global variable: ${GlobalConfig.ecrRegistry}"
 }
