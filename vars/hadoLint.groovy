@@ -1,6 +1,6 @@
 def call() {
     def dockerFilePath = 'Dockerfile'
-    def hadolintConfigFile = libraryResource 'hadolint/.hadolint.yaml'
+    def hadolintConfigFile = libraryResource('hadolint/.hadolint.yaml')
 
     def hadolintCommand = "hadolint ${hadolintConfigFile} ${dockerFilePath}"
 
