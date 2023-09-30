@@ -2,7 +2,7 @@ import org.techiescamp.GlobalConfig
 
 def call(String projectKey, String organization, String sonarTokenCredentialId) {
     def sonarToken = withCredentials([string(credentialsId: sonarTokenCredentialId, variable: 'SONAR_TOKEN')]) {
-        return env.SONAR_TOKEN
+        return SONAR_TOKEN
     }
 
     def sonarCommand = """
