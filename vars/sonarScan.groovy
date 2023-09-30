@@ -1,4 +1,6 @@
-def call(String projectKey, String organization, String hostUrl, String sonarTokenCredentialId) {
+import org.techiescamp.GlobalConfig
+
+def call(String projectKey, String organization, String sonarTokenCredentialId) {
     def sonarToken = withCredentials([string(credentialsId: sonarTokenCredentialId, variable: 'SONAR_TOKEN')]) {
         return env.SONAR_TOKEN
     }
@@ -7,7 +9,7 @@ def call(String projectKey, String organization, String hostUrl, String sonarTok
         mvn sonar:sonar \\
             -Dsonar.projectKey=${projectKey} \\
             -Dsonar.organization=${organization} \\
-            -Dsonar.host.url=${hostUrl} \\
+            -Dsonar.host.url=${GlobalConfig.sonarEndPoint} \\
             -Dsonar.login=${sonarToken}
     """
 
