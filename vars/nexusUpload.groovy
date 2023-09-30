@@ -1,3 +1,5 @@
+import org.techiescamp.GlobalConfig
+
 def call(String nexusRepository, String nexusCredentialsId, String jarFileName) {
     
     withCredentials([usernamePassword(credentialsId: nexusCredentialsId, passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
