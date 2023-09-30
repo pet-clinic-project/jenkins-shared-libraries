@@ -6,7 +6,7 @@ def call(String nexusRepository, String nexusCredentialsId, String jarFileName) 
     
     def jarFile = "${WORKSPACE}/target/*.jar"
 
-    def uploadCommand = "curl -v -u ${USERNAME}:${PASSWORD} --upload-file ${jarFile} ${GlobalConfig.nexusEndPoint}/${nexusRepository}/${jarFile.name}"
+    def uploadCommand = "curl -v -u ${USERNAME}:${PASSWORD} --upload-file ${jarFile} ${GlobalConfig.nexusEndPoint}/${nexusRepository}/${jarFileName}"
     def exitCode = sh(script: uploadCommand, returnStatus: true)
 
     if (exitCode != 0) {
