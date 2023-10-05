@@ -1,3 +1,5 @@
+import org.techiescamp.GlobalConfig
+
 def call(Map params) {
    def projectDirectory = params.projectDirectory
    def tfstateFile = params.tfstateFile
@@ -11,9 +13,9 @@ def terraformInit(project_dir, tfstateFile, var_file) {
       def terraformInitCommand = """
         terraform init \\
           -backend-config="key=dev/${tfstateFile}" \\
-          -backend-config="bucket=dcube-terraform-state" \\
-          -backend-config="region=us-west-2" \\
-          -backend-config="dynamodb_table=terraform-state-lock" \\
+          -backend-config="bucket=${GlobalConfig.backendS3Bucket}" \\
+          -backend-config="region=us-${GlobalConfig.awsRegion}" \\
+          -backend-config="dynamodb_table=${GlobalConfig.backendDynamodbTable}" \\
           -var-file=../../vars/infra/dev/${var_file}
       """
 

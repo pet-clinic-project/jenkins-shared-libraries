@@ -8,4 +8,6 @@ class GlobalConfig {
     
     static String awsRegion = "us-west-2"
     static String ecrRegistry = "814200988517.dkr.ecr.us-west-2.amazonaws.com"
+    static String backendS3Bucket = "dcube-terraform-state"
+    static String backendDynamodbTable  = "terraform-state-lock"
 }
