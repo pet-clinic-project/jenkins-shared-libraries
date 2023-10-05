@@ -5,7 +5,7 @@ class NonPublicCidrBlockCheck(BaseResourceCheck):
     def __init__(self) -> None:
         name = "Ensure AWS security groups have non-public CIDR blocks"
         id = "CUSTOM_AWS_002"
-        supported_resources = ("aws_security_group",)
+        supported_resources = ("aws_security_group", "aws_network_acl",)
         categories = (CheckCategories.NETWORKING,)
         guideline = "CIDR blocks in security group rules should not be set to 0.0.0.0/0."
         super().__init__(name=name, id=id, categories=categories, supported_resources=supported_resources, guideline=guideline)
