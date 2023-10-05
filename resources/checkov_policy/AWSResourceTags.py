@@ -8,7 +8,7 @@ class EnsureTagsHaveValues(BaseResourceCheck):
         supported_resources = (
             "aws_security_group", "aws_s3_bucket", "aws_dynamodb_table", "aws_instance",
             "aws_ecr_repository", "aws_iam_role", "aws_internet_gateway", "aws_route_table", 
-            "aws_route", "aws_subnet", "aws_vpc",
+             "aws_subnet", "aws_vpc",
         )
 
         categories = [CheckCategories.CONVENTION]
