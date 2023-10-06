@@ -16,7 +16,7 @@ def terraformInit(project_dir, tfstateFile, var_file) {
           -backend-config="bucket=${GlobalConfig.backendS3Bucket}" \\
           -backend-config="region=${GlobalConfig.awsRegion}" \\
           -backend-config="dynamodb_table=${GlobalConfig.backendDynamodbTable}" \\
-          -var-file=../../vars/infra/dev/${var_file}
+          -var-file=../../vars/infra/stage/${var_file}
       """
 
       sh terraformInitCommand
