@@ -1,3 +1,5 @@
-def call(String packerFilePath) {
-    sh "packer validate ${packerFilePath}"
+def call(String packerFile, String projectDir) {
+    dir(projectDir){
+        sh "packer validate ${packerFile}"
+    }
 }
