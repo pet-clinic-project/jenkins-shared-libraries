@@ -1,3 +1,5 @@
-def call(String packerFilePath) {
-    sh "packer build ${packerFilePath}"
+def call(String packerFile, String projectDir) {
+    dir(projectDir){
+        sh "packer build ${packerFile}"
+    }
 }
