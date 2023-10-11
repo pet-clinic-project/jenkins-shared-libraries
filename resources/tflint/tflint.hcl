@@ -24,6 +24,6 @@ rule "terraform_unused_declarations" {
 enabled = false
 }
 
-rule "terraform_deprecated_interpolation"
+rule "terraform_deprecated_interpolation" {
 enable = false
 }
