@@ -25,5 +25,5 @@ enabled = false
 }
 
 rule "terraform_deprecated_interpolation" {
-enable = false
+enabled = false
 }
