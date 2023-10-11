@@ -7,7 +7,7 @@ def call(Map params) {
 
 def terraformDestroy(project_dir, var_file) {
    dir(project_dir) {
-      def terraformDestroyCommand = "terraform destroy -var-file=../../vars/infra/stage/${var_file} --auto-approve"
+      def terraformDestroyCommand = "terraform destroy -var-file=../../vars/${var_file} --auto-approve"
 
       sh terraformDestroyCommand
    }
