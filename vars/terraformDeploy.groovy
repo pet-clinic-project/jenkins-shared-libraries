@@ -26,10 +26,6 @@ def terraformInit(project_dir, tfstateFile, var_file) {
 def validate(Map params) {
    def projectDirectory = params.projectDirectory
 
-   terraformValidate(projectDirectory)
-}
-
-def terraformValidate(directory) {
    dir(directory) {
       def terraformValidateCommand = "terraform validate"
       sh terraformValidateCommand 
