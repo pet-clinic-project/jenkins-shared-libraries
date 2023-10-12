@@ -11,7 +11,7 @@ def call(Map params) {
 
 def terraformPlan(project_dir, var_file, plan_file, ami_id) {
    dir(project_dir) {
-      def terraformPlanCommand = "terraform plan -var=$ami_id -var-file=../../vars/$var_file -out $plan_file"
+      def terraformPlanCommand = "terraform plan -var=ami_id=$ami_id -var-file=../../vars/$var_file -out $plan_file"
       sh terraformPlanCommand
    }   
 }
