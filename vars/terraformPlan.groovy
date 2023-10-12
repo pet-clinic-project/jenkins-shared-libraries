@@ -3,14 +3,15 @@ def call(Map params) {
    def variableFile = params.variableFile
    def planFile = params.planFile
    def redirectPlanFile = params.redirectPlanFile
+   def amiId = params.amiId
 
-   terraformPlan(projectDirectory, variableFile, planFile)
+   terraformPlan(projectDirectory, variableFile, planFile, amiId)
    terraformShow(projectDirectory, planFile, redirectPlanFile)
 }
 
-def terraformPlan(project_dir, var_file, plan_file) {
+def terraformPlan(project_dir, var_file, plan_file, ami_id) {
    dir(project_dir) {
-      def terraformPlanCommand = "terraform plan -var=$AMI_ID -var-file=../../vars/$var_file -out $plan_file"
+      def terraformPlanCommand = "terraform plan -var=$ami_id -var-file=../../vars/$var_file -out $plan_file"
       sh terraformPlanCommand
    }   
 }

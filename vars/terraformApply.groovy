@@ -1,13 +1,14 @@
 def call(Map params) {
    def projectDirectory = params.projectDirectory
    def variableFile = params.variableFile
+   def amiId = params.amiId
 
-   terraformApply(projectDirectory, variableFile)
+   terraformApply(projectDirectory, variableFile, amiId)
 }
 
-def terraformApply(project_dir, var_file) {
+def terraformApply(project_dir, var_file, ami_id) {
    dir(project_dir) {
-      def terraformApplyCommand = "terraform apply -var=$AMI_ID -var-file=../../vars/$var_file --auto-approve"
+      def terraformApplyCommand = "terraform apply -var=$ami_id -var-file=../../vars/$var_file --auto-approve"
       sh terraformApplyCommand 
    }   
 }
