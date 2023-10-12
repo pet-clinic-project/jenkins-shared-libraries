@@ -73,3 +73,4 @@ def destroy(Map params) {
       sh terraformDestroyCommand 
    }   
 }
+
