@@ -35,8 +35,8 @@ def plan(Map params) {
    def amiId = params.amiId
 
    dir(projectDirectory) {
-     
-      def terraformPlanCommand = "terraform plan -var=ami_id=$amiId -var-file=../../vars/$variableFile -out $planFile"
+      def amiIdOption = amiId != null ? "-var=ami_id=$amiId" : ""
+      def terraformPlanCommand = "terraform plan $amiIdOption -var-file=../../vars/$variableFile -out $planFile"
       sh terraformPlanCommand
    }   
 }
@@ -58,7 +58,8 @@ def apply(Map params) {
    def amiId = params.amiId
 
    dir(projectDirectory) {
-      def terraformApplyCommand = "terraform apply -var=ami_id=$amiId -var-file=../../vars/$variableFile --auto-approve"
+      def amiIdOption = amiId != null ? "-var=ami_id=$amiId" : ""
+      def terraformApplyCommand = "terraform apply $amiIdOption -var-file=../../vars/$variableFile --auto-approve"
       sh terraformApplyCommand 
    }   
 }
@@ -69,7 +70,8 @@ def destroy(Map params) {
    def amiId = params.amiId
 
    dir(projectDirectory) {
-      def terraformDestroyCommand = "terraform destroy -var=ami_id=$amiId -var-file=../../vars/$variableFile --auto-approve"
+      def amiIdOption = amiId ! = null ? "-var=ami_id=$amiId" : ""
+      def terraformDestroyCommand = "terraform destroy $amiIdOption -var-file=../../vars/$variableFile --auto-approve"
       sh terraformDestroyCommand 
    }   
 }
