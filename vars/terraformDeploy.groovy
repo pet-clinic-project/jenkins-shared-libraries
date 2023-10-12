@@ -35,13 +35,10 @@ def plan(Map params) {
    def amiId = params.amiId
 
    dir(projectDirectory) {
-      if (amiId != null) {
-         def terraformPlanCommand = "terraform plan -var=ami_id=$amiId -var-file=../../vars/$variableFile -out $planFile"
-      } else {
-         def terraformPlanCommand = "terraform plan -var-file=../../vars/$variableFile -out $planFile"
-      }
+      def amiIdOption = amiId != null ? "-var=ami_id=$amiId" : ""
+      def terraformPlanCommand = "terraform plan $amiIdOption -var-file=../../vars/$variableFile -out $planFile"
       sh terraformPlanCommand
-   }     
+   }    
 }
 
 def show(Map params) {
