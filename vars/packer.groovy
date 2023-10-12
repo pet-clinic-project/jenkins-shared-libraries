@@ -1,11 +1,15 @@
-def validate(String packerFile, String projectDir) {
-    dir(projectDir){
-        sh "packer validate ${packerFile}"
-    }
+def validate(Map params) {
+    runPackerCommand(params, 'validate')
 }
 
-def build(String packerFile, String projectDir) {
-    dir(projectDir){
-        sh "packer build ${packerFile}"
+def build(Map params) {
+    runPackerCommand(params, 'build')
+}
+
+def runPackerCommand(Map params, String command) {
+    def packerCommand = "packer $command ${params.packerFile}"
+
+    dir(params.projectDir) {
+        sh packerCommand
     }
 }
