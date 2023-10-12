@@ -36,7 +36,7 @@ def call(String projectKey, String organization, String sonarTokenCredentialId) 
             httpMode: 'GET',
             timeout: 30,
             url: apiUrl,
-            authentication: ${sonarToken},
+            authentication: "${sonarToken}",
             customHeaders: [[name: 'Authorization', value: "Bearer ${sonarToken}"]],
             ignoreSslErrors: true,
             validResponseCodes: '200',
