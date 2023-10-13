@@ -32,13 +32,17 @@ def plan(Map params) {
    def projectDirectory = params.projectDirectory
    def variableFile = params.variableFile
    def planFile = params.planFile
-   def amiId = params.amiId
+   def key = params.key
+   def value = params.value
 
    dir(projectDirectory) {
-      def amiIdOption = amiId != null ? "-var=ami_id=$amiId" : ""
-      def terraformPlanCommand = "terraform plan $amiIdOption -var-file=../../vars/$variableFile -out $planFile"
+      def variableOptions = variables.collect { key, value ->
+         value != null ? "-var=${key}=${value}" : ""
+      }.join(' ')
+      
+      def terraformPlanCommand = "terraform plan $variableOptions -var-file=../../vars/$variableFile -out $planFile"
       sh terraformPlanCommand
-   }   
+   }  
 }
 
 def show(Map params) {
