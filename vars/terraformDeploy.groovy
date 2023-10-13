@@ -32,8 +32,7 @@ def plan(Map params) {
    def projectDirectory = params.projectDirectory
    def variableFile = params.variableFile
    def planFile = params.planFile
-   def key = params.key
-   def value = params.value
+   def variableMap = params.variables
 
    dir(projectDirectory) {
       def variableOptions = ""
