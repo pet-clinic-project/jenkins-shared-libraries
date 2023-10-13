@@ -32,11 +32,11 @@ def plan(Map params) {
    def projectDirectory = params.projectDirectory
    def variableFile = params.variableFile
    def planFile = params.planFile
-   def variableMap = params.variables
+   def extraVariableMap = params.extraVariableMap
 
    dir(projectDirectory) {
       def variableOptions = ""
-      variableMap.each { key, value ->
+      extraVariableMap.each { key, value ->
          if (value != null) {
             variableOptions += "-var=$key=$value "
          }
@@ -61,11 +61,17 @@ def show(Map params) {
 def apply(Map params) {
    def projectDirectory = params.projectDirectory
    def variableFile = params.variableFile
-   def amiId = params.amiId
+   def extraVariableMap = params.extraVariableMap
 
    dir(projectDirectory) {
-      def amiIdOption = amiId != null ? "-var=ami_id=$amiId" : ""
-      def terraformApplyCommand = "terraform apply $amiIdOption -var-file=../../vars/$variableFile --auto-approve"
+      def variableOptions = ""
+      extraVariableMap.each { key, value ->
+         if (value != null) {
+            variableOptions += "-var=$key=$value "
+         }
+      }
+
+      def terraformApplyCommand = "terraform apply $variableOptions -var-file=../../vars/$variableFile --auto-approve"
       sh terraformApplyCommand 
    }   
 }
@@ -73,11 +79,17 @@ def apply(Map params) {
 def destroy(Map params) {
    def projectDirectory = params.projectDirectory
    def variableFile = params.variableFile
-   def amiId = params.amiId
+   def extraVariableMap = params.extraVariableMap
 
    dir(projectDirectory) {
-      def amiIdOption = amiId != null ? "-var=ami_id=$amiId" : ""
-      def terraformDestroyCommand = "terraform destroy $amiIdOption -var-file=../../vars/$variableFile --auto-approve"
+      def variableOptions = ""
+      extraVariableMap.each { key, value ->
+         if (value != null) {
+            variableOptions += "-var=$key=$value "
+         }
+      }
+
+      def terraformDestroyCommand = "terraform destroy $variableOptions -var-file=../../vars/$variableFile --auto-approve"
       sh terraformDestroyCommand 
    }   
 }
