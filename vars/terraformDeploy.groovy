@@ -70,7 +70,7 @@ def destroy(Map params) {
    def amiId = params.amiId
 
    dir(projectDirectory) {
-      def amiIdOption = amiId ! = null ? "-var=ami_id=$amiId" : ""
+      def amiIdOption = amiId != null ? "-var=ami_id=$amiId" : ""
       def terraformDestroyCommand = "terraform destroy $amiIdOption -var-file=../../vars/$variableFile --auto-approve"
       sh terraformDestroyCommand 
    }   
