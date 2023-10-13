@@ -69,10 +69,10 @@ def show(Map params) {
 //    def variableFile = params.variableFile
 //    def amiId = params.amiId
 
-//    dir(projectDirectory) {
-//       def amiIdOption = amiId ! = null ? "-var=ami_id=$amiId" : ""
-//       def terraformDestroyCommand = "terraform destroy $amiIdOption -var-file=../../vars/$variableFile --auto-approve"
-//       sh terraformDestroyCommand 
-//    }   
-// }
+   dir(projectDirectory) {
+      def amiIdOption = amiId != null ? "-var=ami_id=$amiId" : ""
+      def terraformDestroyCommand = "terraform destroy $amiIdOption -var-file=../../vars/$variableFile --auto-approve"
+      sh terraformDestroyCommand 
+   }   
+}
 
