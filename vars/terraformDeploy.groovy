@@ -52,22 +52,22 @@ def show(Map params) {
    }   
 }
 
-// def apply(Map params) {
-//    def projectDirectory = params.projectDirectory
-//    def variableFile = params.variableFile
-//    def amiId = params.amiId
+def apply(Map params) {
+   def projectDirectory = params.projectDirectory
+   def variableFile = params.variableFile
+   def amiId = params.amiId
 
-//    dir(projectDirectory) {
-//       def amiIdOption = amiId != null ? "-var=ami_id=$amiId" : ""
-//       def terraformApplyCommand = "terraform apply $amiIdOption -var-file=../../vars/$variableFile --auto-approve"
-//       sh terraformApplyCommand 
-//    }   
-// }
+   dir(projectDirectory) {
+      def amiIdOption = amiId != null ? "-var=ami_id=$amiId" : ""
+      def terraformApplyCommand = "terraform apply $amiIdOption -var-file=../../vars/$variableFile --auto-approve"
+      sh terraformApplyCommand 
+   }   
+}
 
-// def destroy(Map params) {
-//    def projectDirectory = params.projectDirectory
-//    def variableFile = params.variableFile
-//    def amiId = params.amiId
+def destroy(Map params) {
+   def projectDirectory = params.projectDirectory
+   def variableFile = params.variableFile
+   def amiId = params.amiId
 
    dir(projectDirectory) {
       def amiIdOption = amiId != null ? "-var=ami_id=$amiId" : ""
