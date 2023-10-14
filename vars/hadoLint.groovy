@@ -1,6 +1,13 @@
 def call() {
-    def dockerFilePath = 'Dockerfile'
-    def hadolintCommand = "hadolint --ignore DL3008 --ignore DL3015 --ignore DL3047 ${dockerFilePath}"
+
+    def dockerFilePath = "${WORKSPACE}/Dockerfile"
+    
+    script {
+                    def tplContent = libraryResource "hadolint/.hadolint.yaml"
+                    writeFile file: "${WORKSPACE}/.hadolint.yaml", text: tplContent
+                }
+
+    def hadolintCommand = "hadolint --config ${WORKSPACE}/.hadolint.yaml ${dockerFilePath}"
 
     def hadolintOutput = sh(script: hadolintCommand, returnStatus: true)
 
