@@ -1,7 +1,6 @@
 cache-dir: /tmp/trivy-cache
 format: template
 template: '@${WORKSPACE}/html.tpl'
-output: '${WORKSPACE}/trivy-report.html'
 timeout: 10m
 dependency-tree: true
 list-all-pkgs: true
