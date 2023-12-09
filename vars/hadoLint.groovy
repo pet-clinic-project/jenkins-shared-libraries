@@ -8,4 +8,6 @@ def call() {
                 }
 
     def hadolintCommand = "hadolint --config ${WORKSPACE}/.hadolint.yaml ${dockerFilePath}"
+
+    def hadolintOutput = sh(script: hadolintCommand, returnStatus: true)
 }
