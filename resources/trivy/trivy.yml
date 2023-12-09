@@ -1,0 +1,26 @@
+cache-dir: /tmp/trivy-cache
+format: template
+template: '@${WORKSPACE}/html.tpl'
+output: ${WORKSPACE}/trivy-report.html
+timeout: 10m
+dependency-tree: true
+list-all-pkgs: true
+exit-code: 1
+severity:
+  - CRITICAL
+scan:
+  skip-dirs:
+    - /lib64
+    - /lib
+    - /usr/lib
+    - /usr/include
+  security-checks:
+    - vuln
+    - secret
+vulnerability:
+  type:
+    - os
+    - library
+  ignore-unfixed: true
+db:
+  skip-update: false
