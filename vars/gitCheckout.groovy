@@ -1,8 +1,8 @@
-def call(Map config = [:]) {
+def call(Map stageParams) {
 
     checkout([
         $class: 'GitSCM',
-        branches: [[name: "refs/heads/$branch"]],
-        userRemoteConfigs: [[url: gitUrl]]
+        branches: [[name:  stageParams.branch ]],
+        userRemoteConfigs: [[ url: stageParams.url ]]
     ])
-}
+  }
