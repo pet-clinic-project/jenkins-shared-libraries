@@ -1,8 +1,8 @@
-def call(Map stageParams) {
-    checkout(
-        scmGit(
-            branches: [[name:  stageParams.branch ]],
-            userRemoteConfigs: [[ url: stageParams.url ]]
-        )
-    )
+def call(Map config = [:]) {
+
+    checkout([
+        $class: 'GitSCM',
+        branches: [[name: "refs/heads/$branch"]],
+        userRemoteConfigs: [[url: gitUrl]]
+    ])
 }
