@@ -62,27 +62,27 @@
   </thead>
   <tbody>
     <tr>
-      <td>Build Number</td>
+      <td>Build_Number</td>
       <td id="build_number">${BUILD_NUMBER}</td>
     </tr>
     <tr>
-      <td>Job Name</td>
+      <td>Job_Name</td>
       <td id="job_name">${JOB_NAME}</td>
     </tr>
     <tr>
-      <td>Build Status</td>
+      <td>Build_Status</td>
       <td id="build_status" class="status">${currentBuild.result}</td>
     </tr>
     <tr>
-      <td>Build URL</td>
+      <td>Build_URL</td>
       <td id="build_url"><a href="${BUILD_URL}" target="_blank">${BUILD_URL}</a></td>
     </tr>
     <tr>
-      <td>Branch URL</td>
+      <td>Branch_URL</td>
       <td id="branch_url"><a href="${JOB_DISPLAY_URL}" target="_blank">${JOB_DISPLAY_URL}</a></td>
     </tr>
     <tr>
-      <td>Build Details</td>
+      <td>Build_Details</td>
       <td id="build_details"><a href="${RUN_DISPLAY_URL}" target="_blank">${RUN_DISPLAY_URL}</a></td>
     </tr>
   </tbody>
