@@ -4,9 +4,11 @@ def call(String recipient) {
 
         def buildStatus = currentBuild.currentResult
         def statusColor = buildStatus == 'SUCCESS' ? 'green' : 'red'
+        def headerColor = buildStatus == 'SUCCESS' ? '#28a745' : '#dc3545' // Green for success, red for failure
 
         tplContent = tplContent.replace('${BUILD_STATUS}', buildStatus)
                                .replace('${STATUS_COLOR}', statusColor)
+                               .replace('${HEADER_COLOR}', headerColor) // Replace the header color
 
         writeFile file: "${WORKSPACE}/notify.tpl", text: tplContent
     }
