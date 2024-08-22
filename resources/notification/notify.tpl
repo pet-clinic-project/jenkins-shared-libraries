@@ -45,7 +45,7 @@
 
     .status {
       font-weight: bold;
-      color: ${currentBuild.result == 'SUCCESS' ? 'green' : 'red'};
+      color: ${STATUS_COLOR};
     }
   </style>
 </head>
@@ -71,14 +71,14 @@
     </tr>
     <tr>
       <td>Build_Status</td>
-      <td id="build_status" class="status">${currentBuild.result}</td>
+      <td id="build_status" class="status">${BUILD_STATUS}</td>
     </tr>
     <tr>
       <td>Build_URL</td>
       <td id="build_url"><a href="${BUILD_URL}" target="_blank">${BUILD_URL}</a></td>
     </tr>
     <tr>
-      <td>Branch_URL</td>
+      <td>Branch_Url</td>
       <td id="branch_url"><a href="${JOB_DISPLAY_URL}" target="_blank">${JOB_DISPLAY_URL}</a></td>
     </tr>
     <tr>
