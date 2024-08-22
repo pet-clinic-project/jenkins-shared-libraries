@@ -4,10 +4,10 @@ def call(String recipient) {
         writeFile file: "${WORKSPACE}/notify.tpl", text: tplContent
     }
 
-        def email = emailext(
-            subject: "${JOB_NAME} - ${BUILD_NUMBER}",
-            body: readFile("${WORKSPACE}/notify.tpl"),
-            to: "${recipient}",
-            mimeType: 'text/html'
-        )
+    emailext(
+        subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.result}",
+        body: readFile("${WORKSPACE}/notify.tpl"),
+        to: "${recipient}",
+        mimeType: 'text/html'
+    )
 }

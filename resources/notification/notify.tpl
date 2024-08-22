@@ -42,6 +42,11 @@
     a:hover {
       text-decoration: underline;
     }
+
+    .status {
+      font-weight: bold;
+      color: ${currentBuild.result == 'SUCCESS' ? 'green' : 'red'};
+    }
   </style>
 </head>
 <body>
@@ -57,24 +62,28 @@
   </thead>
   <tbody>
     <tr>
-      <td>Build_Number</td>
+      <td>Build Number</td>
       <td id="build_number">${BUILD_NUMBER}</td>
     </tr>
     <tr>
-      <td>Job_Name</td>
+      <td>Job Name</td>
       <td id="job_name">${JOB_NAME}</td>
     </tr>
     <tr>
-      <td>Build_URL</td>
+      <td>Build Status</td>
+      <td id="build_status" class="status">${currentBuild.result}</td>
+    </tr>
+    <tr>
+      <td>Build URL</td>
       <td id="build_url"><a href="${BUILD_URL}" target="_blank">${BUILD_URL}</a></td>
     </tr>
     <tr>
-      <td>Triggered_Url</td>
-      <td id="triggered_url"><a href="${JOB_DISPLAY_URL}" target="_blank">${JOB_DISPLAY_URL}</a></td>
+      <td>Branch URL</td>
+      <td id="branch_url"><a href="${JOB_DISPLAY_URL}" target="_blank">${JOB_DISPLAY_URL}</a></td>
     </tr>
     <tr>
-      <td>PR Details</td>
-      <td id="pr_details"><a href="${RUN_DISPLAY_URL}" target="_blank">${RUN_DISPLAY_URL}</a></td>
+      <td>Build Details</td>
+      <td id="build_details"><a href="${RUN_DISPLAY_URL}" target="_blank">${RUN_DISPLAY_URL}</a></td>
     </tr>
   </tbody>
 </table>
