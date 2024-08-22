@@ -8,7 +8,6 @@ def call(String recipient) {
 
         tplContent = tplContent.replace('${BUILD_STATUS}', buildStatus)
                                .replace('${STATUS_COLOR}', statusColor)
-                               .replace('${HEADER_COLOR}', headerColor) // Replace the header color
 
         writeFile file: "${WORKSPACE}/notify.tpl", text: tplContent
     }
