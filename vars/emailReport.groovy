@@ -1,9 +1,13 @@
 def call(String recipient) {
-    def email = emailext(
-        subject: "${JOB_NAME} - ${BUILD_NUMBER}",
-        body:  """<html><body>
-                    <p>Click <a href="${BUILD_URL}">here</a> to view the build details.</p>
-                </body></html>""",
-        to: "${recipient}",
-    )
+    script {
+        def tplContent = libraryResource "notification/notify.tpl"
+        writeFile file: "${WORKSPACE}/notify.tpl", text: tplContent
+    }
+
+        def email = emailext(
+            subject: "${JOB_NAME} - ${BUILD_NUMBER}",
+            body: readFile("${WORKSPACE}/notify.tpl"),
+            to: "${recipient}",
+            mimeType: 'text/html'
+        )
 }
