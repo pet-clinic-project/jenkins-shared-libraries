@@ -11,7 +11,7 @@
     }
 
     h1 {
-      background-color: headerColor; /* Header color based on build status */
+      background-color: "${headerColor}"; /* Header color based on build status */
       color: #ffffff;
       padding: 20px;
       margin: 0;
