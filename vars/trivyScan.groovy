@@ -11,21 +11,27 @@ def kaniko() {
         }
 
         def command = "trivy image --config ${WORKSPACE}/trivy.yml --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html --input ${WORKSPACE}/${BUILD_NUMBER}.tar"
-        def trivyOutput = sh(script: command, returnStdout: true).trim()
 
-        if (trivyOutput != 0) {
-            echo "Trivy scan encountered issues. Exit code: ${trivyOutput}. Review the generated report."
+        // Capture the exit code
+        def exitCode = sh(script: command, returnStatus: true)
+
+        // If needed, capture the command output separately
+        def output = sh(script: command, returnStdout: true).trim()
+
+        if (exitCode != 0) {
+            echo "Trivy scan encountered issues. Exit code: ${exitCode}. Review the generated report."
         } else {
             echo "Trivy scan completed successfully with no critical vulnerabilities."
         }
 
         echo "Trivy Scan Results:"
-        echo trivyOutput
+        echo output
 
     } catch (Exception e) {
         error "Exception during Trivy scan for Kaniko image: ${e.getMessage()}"
     }
 }
+
 
 def docker(String imageName, String imageTag) {
     try {
