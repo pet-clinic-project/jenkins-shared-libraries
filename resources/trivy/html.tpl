@@ -122,17 +122,19 @@
         <th>Severity</th>
         <th>Message</th>
       </tr>
-        {{- range .Misconfigurations }}
+      {{- range .Misconfigurations }}
       <tr class="severity-{{ escapeXML .Severity }}">
-        <td class="misconf-type">{{ escapeXML .Type }}</td>
+        <td class="misconf-type">{{- if eq (printf "%T" .Type) "string" -}}
+          {{ escapeXML .Type }}
+          {{- else -}}
+          {{ printf "%s" (escapeXML .Type) }}
+          {{- end }}
+        </td>
         <td>{{ escapeXML .ID }}</td>
         <td class="misconf-check">{{ escapeXML .Title }}</td>
         <td class="severity">{{ escapeXML .Severity }}</td>
-        <td class="link" data-more-links="off"  style="white-space:normal;">
+        <td class="link" data-more-links="off" style="white-space:normal;">
           {{ escapeXML .Message }}
-          <br>
-            <a href={{ escapeXML .PrimaryURL | printf "%q" }}>{{ escapeXML .PrimaryURL }}</a>
-          </br>
         </td>
       </tr>
         {{- end }}
