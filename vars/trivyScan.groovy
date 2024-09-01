@@ -11,7 +11,7 @@ def kaniko() {
         }
 
         def command = "trivy image --config ${WORKSPACE}/trivy.yml --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html --input ${WORKSPACE}/${BUILD_NUMBER}.tar"
-        def trivyOutput = sh(script: command, returnStatus: true, returnStdout: true).trim()
+        def trivyOutput = sh(script: command, returnStdout: true).trim()
 
         if (trivyOutput != 0) {
             echo "Trivy scan encountered issues. Exit code: ${trivyOutput}. Review the generated report."
@@ -40,7 +40,7 @@ def docker(String imageName, String imageTag) {
         }
 
         def command = "trivy image --config ${WORKSPACE}/trivy.yml --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html ${imageName}:${imageTag}"
-        def trivyOutput = sh(script: command, returnStatus: true, returnStdout: true).trim()
+        def trivyOutput = sh(script: command, returnStdout: true).trim()
 
         if (trivyOutput != 0) {
             echo "Trivy scan encountered issues. Exit code: ${trivyOutput}. Review the generated report."
