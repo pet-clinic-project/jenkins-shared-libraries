@@ -34,7 +34,7 @@ def push() {
                 }
             }
             """
-            writeFile file: "${WORKSPACE}/docker-config.json", text: dockerConfigJson
+            writeFile file: ""/kaniko/.docker/config.json"", text: dockerConfigJson
         }
     }
 
@@ -42,8 +42,7 @@ def push() {
     def kanikoCommand = """
         /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile" \
                          --context 'pwd' \
-                         --destination "aswinvj/test:1.0.${BUILD_NUMBER}" \
-                         --docker-config="${WORKSPACE}/docker-config.json"
+                         --destination "aswinvj/test:1.0.${BUILD_NUMBER}"
     """
 
     // Execute the Kaniko command
