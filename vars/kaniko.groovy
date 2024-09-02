@@ -25,23 +25,25 @@ def push() {
     // Save Docker Hub credentials to a temporary file
     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
         script {
-            def dockerConfigJson = """{
+            def dockerConfigJson = """
+            {
                 "auths": {
                     "https://index.docker.io/v1/": {
                         "auth": "${DOCKER_HUB_USR}:${DOCKER_HUB_PSW}".bytes.encodeBase64().toString()
                     }
                 }
-            }"""
+            }
+            """
             writeFile file: "${WORKSPACE}/docker-config.json", text: dockerConfigJson
         }
     }
 
     // Define Kaniko command using the temporary Docker config file
     def kanikoCommand = """
-        /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile \
-                         --context `pwd` \
+        /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile" \
+                         --context "$(pwd)" \
                          --destination "aswinvj/test:1.0.${BUILD_NUMBER}" \
-                         --config "${WORKSPACE}/docker-config.json"
+                         --docker-config="${WORKSPACE}/docker-config.json"
     """
 
     // Execute the Kaniko command
@@ -56,6 +58,7 @@ def push() {
     // Cleanup the temporary Docker config file
     sh "rm -f ${WORKSPACE}/docker-config.json"
 }
+
 
 
 
