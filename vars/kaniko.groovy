@@ -34,7 +34,7 @@ def push() {
                 }
             }
             """
-            writeFile file: ""/kaniko/.docker/config.json"", text: dockerConfigJson
+            writeFile file: "/kaniko/.docker/config.json", text: dockerConfigJson
         }
     }
 
