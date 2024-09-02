@@ -21,7 +21,7 @@ def build() {
 }
 
 def push() {
-
+    sh "mkdir -p /kaniko/.docker"
     // Save Docker Hub credentials to a temporary file
     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
         script {
