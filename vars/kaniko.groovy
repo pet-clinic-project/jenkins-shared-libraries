@@ -28,12 +28,12 @@ def push(Map params) {
     withCredentials([usernamePassword(credentialsId: credentialsId, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
         sh """
         /kaniko/executor --dockerfile=Dockerfile \
-                         --dockerfile=Dockerfile \
                          --context `pwd` \
-                         --destination=${imageName}:${imageTag}
+                         --destination=docker.io/${imageName}:${imageTag}
         """
     }
 }
+
 
 
 
