@@ -36,11 +36,7 @@ def test() {
 
         def command = "trivy image --config ${WORKSPACE}/trivy.yml --format template --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html --input ${WORKSPACE}/${BUILD_NUMBER}.tar"
 
-        // Capture the output
         def trivyOutput = sh(script: command, returnStdout: true).trim()
-
-        // Capture the exit code
-        def exitCode = sh(script: command, returnStatus: true)
 
         echo "Trivy Scan Results:"
         echo trivyOutput
