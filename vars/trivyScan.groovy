@@ -30,7 +30,7 @@ def kaniko() {
     try {
         setupTrivyFiles()
 
-        def command = "trivy image --config ${WORKSPACE}/trivy.yml --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html --input ${WORKSPACE}/${BUILD_NUMBER}.tar"
+        def command = "trivy image --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html --input ${WORKSPACE}/${BUILD_NUMBER}.tar"
         def result = runTrivyCommand(command)
 
         return result.exitCode
