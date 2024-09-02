@@ -22,13 +22,15 @@ def build() {
 
 def push() {
     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-        // Create Docker config JSON securely
-        def auth = sh(script: "echo -n ${DOCKER_USERNAME}:${DOCKER_PASSWORD} | base64", returnStdout: true).trim()
+        // Generate base64 encoded auth string
+        def encodedAuth = sh(script: "echo -n ${DOCKER_USERNAME}:${DOCKER_PASSWORD} | base64", returnStdout: true).trim()
+
+        // Create config.json content
         def dockerConfigJson = """
         {
             "auths": {
                 "https://index.docker.io/v1/": {
-                    "auth": "${auth}"
+                    "auth": "${encodedAuth}"
                 }
             }
         }
@@ -38,14 +40,14 @@ def push() {
         writeFile file: '/kaniko/.docker/config.json', text: dockerConfigJson
 
         // Define Kaniko command
-        def destination = sh(script: "echo ${DOCKER_USERNAME}/test:1.0.${BUILD_NUMBER}", returnStdout: true).trim()
-        
-        // Execute the Kaniko command
-        def kanikoOutput = sh(script: """
+        def kanikoCommand = """
             /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile" \
                              --context "${WORKSPACE}" \
-                             --destination "${destination}"
-        """, returnStatus: true)
+                             --destination "${DOCKER_USERNAME}/test:1.0.${BUILD_NUMBER}"
+        """
+
+        // Execute the Kaniko command
+        def kanikoOutput = sh(script: kanikoCommand, returnStatus: true)
 
         echo "Kaniko Exit Code: ${kanikoOutput}"
 
