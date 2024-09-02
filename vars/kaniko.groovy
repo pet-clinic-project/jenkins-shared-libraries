@@ -37,17 +37,14 @@ def push() {
         }
         """
         
-        // Write Docker config to the workspace directory
-        writeFile file: "${WORKSPACE}/config.json", text: dockerConfigJson
+        // Write Docker config to the Kaniko config location within the pod
+        writeFile file: '/kaniko/.docker/config.json', text: dockerConfigJson
 
-        // Define the Docker run command for Kaniko with the config.json mounted
+        // Define Kaniko command to build and push the image
         def kanikoCommand = """
-            docker run -ti --rm \
-            -v ${WORKSPACE}:/workspace \
-            -v ${WORKSPACE}/config.json:/kaniko/.docker/config.json:ro \
-            gcr.io/kaniko-project/executor:latest \
-            --dockerfile=Dockerfile \
-            --destination=${DOCKER_USERNAME}/test:1.0.${BUILD_NUMBER}
+            /kaniko/executor --dockerfile=${WORKSPACE}/Dockerfile \
+                             --context=${WORKSPACE} \
+                             --destination=${DOCKER_USERNAME}/test:1.0.${BUILD_NUMBER}
         """
 
         // Execute the Kaniko command
@@ -60,4 +57,5 @@ def push() {
         }
     }
 }
+
 
