@@ -20,7 +20,7 @@ def build() {
     }
 }
 
-def push(String imageName, String imageTag, String credentialsId") {
+def push(String imageName, String imageTag, String credentialsId) {
     try {
         withCredentials([usernamePassword(credentialsId: credentialsId, usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
             sh """
@@ -45,3 +45,4 @@ def push(String imageName, String imageTag, String credentialsId") {
         error "Exception during Kaniko push: ${e.getMessage()}"
     }
 }
+
