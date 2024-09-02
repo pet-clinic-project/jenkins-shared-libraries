@@ -36,20 +36,25 @@ def test() {
 
         def command = "trivy image --config ${WORKSPACE}/trivy.yml --format template --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html --input ${WORKSPACE}/${BUILD_NUMBER}.tar"
 
-        def result = sh(script: command, returnStatus: true, returnStdout: true).trim()
+        // Capture the output
+        def trivyOutput = sh(script: command, returnStdout: true).trim()
+
+        // Capture the exit code
+        def exitCode = sh(script: command, returnStatus: true)
 
         echo "Trivy Scan Results:"
-        echo result
+        echo trivyOutput
 
-        if (result.exitCode != 0) {
+        if (exitCode != 0) {
             error "Trivy scan encountered issues. Review the report at: ${WORKSPACE}/trivy-report.html"
         } else {
             echo "Trivy scan completed successfully with no critical vulnerabilities."
         }
 
-        return result.exitCode
+        return exitCode
     }
 }
+
 
 
 def kaniko() {
