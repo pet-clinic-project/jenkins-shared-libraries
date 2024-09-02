@@ -17,7 +17,7 @@ def call(String reportPath, String recipient) {
         subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
         body: readFile("${WORKSPACE}/notify.tpl"),
         to: recipient,
-        mimeType: 'text/html'
+        mimeType: 'text/html',
         attachmentsPattern: reportPath
     )
 }
