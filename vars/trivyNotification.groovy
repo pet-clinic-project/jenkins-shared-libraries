@@ -7,6 +7,6 @@ def call(String reportPath, String recipient) {
                 </body></html>""",
         to: "${recipient}",
         mimeType: 'text/html',
-        attachmentsPattern: reportPath
+        attachmentsPattern: "${reportPath}"
     )
 }
