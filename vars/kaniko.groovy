@@ -40,7 +40,7 @@ def push() {
     def kanikoCommand = """
         /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile \
                          --context `pwd` \
-                         --destination "aswinvj/test:1.0.${BUILD_NUMBER}" \ \
+                         --destination "aswinvj/test:1.0.${BUILD_NUMBER}" \
                          --config "${WORKSPACE}/docker-config.json"
     """
 
