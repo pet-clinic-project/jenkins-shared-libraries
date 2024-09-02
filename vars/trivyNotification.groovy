@@ -1,5 +1,4 @@
 def call(String reportPath, String recipient) {
-    // Check if the file exists
     if (fileExists(reportPath)) {
         echo "File found: ${reportPath}"
 

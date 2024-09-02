@@ -34,7 +34,7 @@ def test() {
         def trivyConfigContent = libraryResource "trivy/trivy.yml"
         writeFile file: "${WORKSPACE}/trivy.yml", text: trivyConfigContent
 
-        def command = "trivy image --config ${WORKSPACE}/trivy.yml --format template --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html --input ${WORKSPACE}/${BUILD_NUMBER}.tar"
+        def command = "trivy image --config ${WORKSPACE}/trivy.yml --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html --input ${WORKSPACE}/${BUILD_NUMBER}.tar"
 
         def trivyOutput = sh(script: command, returnStdout: true).trim()
 
