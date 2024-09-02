@@ -21,44 +21,40 @@ def build() {
 }
 
 def push() {
-    sh "mkdir -p /kaniko/.docker"
-    // Save Docker Hub credentials to a temporary file
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
-        script {
-            def dockerConfigJson = """
-            {
-                "auths": {
-                    "https://index.docker.io/v1/": {
-                        "auth": "${DOCKER_HUB_USR}:${DOCKER_HUB_PSW}".bytes.encodeBase64().toString()
-                    }
+    // Use environment variables for Docker credentials
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+        // Create Docker config JSON using environment variables
+        def dockerConfigJson = """
+        {
+            "auths": {
+                "https://index.docker.io/v1/": {
+                    "auth": "${DOCKER_USERNAME}:${DOCKER_PASSWORD}".bytes.encodeBase64().toString()
                 }
             }
-            """
-            writeFile file: "/kaniko/.docker/config.json", text: dockerConfigJson
         }
+        """
+        
+        // Write Docker config to a file in the workspace
+        writeFile file: "${WORKSPACE}/docker-config.json", text: dockerConfigJson
+
+        // Define Kaniko command using the Docker config from workspace
+        def kanikoCommand = """
+            /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile" \
+                             --context "${WORKSPACE}" \
+                             --destination "aswinvj/test:1.0.${BUILD_NUMBER}" \
+                             --dockerconfig="${WORKSPACE}/docker-config.json"
+        """
+
+        // Execute the Kaniko command
+        def kanikoOutput = sh(script: kanikoCommand, returnStatus: true)
+
+        echo "Kaniko Exit Code: ${kanikoOutput}"
+
+        if (kanikoOutput != 0) {
+            error "Kaniko failed with exit code ${kanikoOutput}"
+        }
+
+        // Clean up the temporary Docker config file
+        sh "rm -f ${WORKSPACE}/docker-config.json"
     }
-
-    // Define Kaniko command using the temporary Docker config file
-    def kanikoCommand = """
-        /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile" \
-                         --context 'pwd' \
-                         --destination "aswinvj/test:1.0.${BUILD_NUMBER}"
-    """
-
-    // Execute the Kaniko command
-    def kanikoOutput = sh(script: kanikoCommand, returnStatus: true)
-
-    echo "Kaniko Exit Code: ${kanikoOutput}"
-
-    if (kanikoOutput != 0) {
-        error "Kaniko failed with exit code ${kanikoOutput}"
-    }
-
-    // Cleanup the temporary Docker config file
-    sh "rm -f ${WORKSPACE}/docker-config.json"
 }
-
-
-
-
-
