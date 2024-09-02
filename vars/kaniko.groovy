@@ -40,10 +40,10 @@ def push() {
 
     // Define Kaniko command using the temporary Docker config file
     def kanikoCommand = """
-        /kaniko/executor --dockerfile='${WORKSPACE}/Dockerfile' \
-                         --context='$(pwd)' \
-                         --destination='aswinvj/test:1.0.${BUILD_NUMBER}' \
-                         --docker-config='${WORKSPACE}/docker-config.json'
+        /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile" \
+                         --context 'pwd' \
+                         --destination "aswinvj/test:1.0.${BUILD_NUMBER}" \
+                         --docker-config="${WORKSPACE}/docker-config.json"
     """
 
     // Execute the Kaniko command
