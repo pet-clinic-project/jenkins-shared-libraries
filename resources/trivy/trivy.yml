@@ -1,6 +1,7 @@
 cache-dir: /tmp/trivy-cache
 format: template
 timeout: 10m
+exit-code: 1
 severity:
   - CRITICAL
 scan:
