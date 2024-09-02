@@ -15,7 +15,7 @@ def runTrivyCommand(String command) {
     def output = sh(script: command, returnStdout: true).trim()
 
     if (exitCode != 0) {
-        echo "Trivy scan encountered issues. Exit code: ${exitCode}. Review the generated report."
+        echo "Trivy scan encountered issues.${output}. Exit code: ${exitCode}. Review the generated report."
     } else {
         echo "Trivy scan completed successfully with no critical vulnerabilities."
     }
