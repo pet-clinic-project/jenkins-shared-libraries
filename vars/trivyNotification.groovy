@@ -1,19 +1,23 @@
 def call(String reportPath, String recipient) {
-    if (fileExists(reportPath)) {
-        echo "File found: ${reportPath}"
+    script {
+        def tplContent = libraryResource "notification/notify.tpl"
 
-        emailext(
-            subject: "${JOB_NAME} - ${BUILD_NUMBER}",
-            body: """<html><body>
-                        <p>Click <a href="${BUILD_URL}">here</a> to view the build details.</p>
-                        <p>The scan report is attached to this email.</p>
-                    </body></html>""",
-            to: "${recipient}",
-            mimeType: 'text/html',
-            attachmentsPattern: reportPath
-        )
-    } else {
-        echo "File not found: ${reportPath}"
-        error "Report file not found. Cannot send email with attachment."
+        def buildStatus = currentBuild.currentResult
+        def statusColor = buildStatus == 'SUCCESS' ? 'green' : 'red'
+        def headerColor = buildStatus == 'SUCCESS' ? '#28a745' : '#dc3545' // Green for success, red for failure
+
+        tplContent = tplContent.replace('${BUILD_STATUS}', buildStatus)
+                               .replace('${STATUS_COLOR}', statusColor)
+                               .replace('${HEADER_COLOR}', headerColor) // Replace the header color
+
+        writeFile file: "${WORKSPACE}/notify.tpl", text: tplContent
     }
+
+    def email = emailext(
+        subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
+        body: readFile("${WORKSPACE}/notify.tpl"),
+        to: recipient,
+        mimeType: 'text/html'
+        attachmentsPattern: reportPath
+    )
 }
