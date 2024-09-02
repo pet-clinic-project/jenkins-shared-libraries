@@ -20,13 +20,42 @@ def build() {
     }
 }
 
-def push(String credentialsId, String imageName, String imageTag) {
+def push() {
+
+    // Save Docker Hub credentials to a temporary file
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
         script {
-            sh """
-                echo "hi"
-            """
-        
+            def dockerConfigJson = """{
+                "auths": {
+                    "https://index.docker.io/v1/": {
+                        "auth": "${DOCKER_HUB_USR}:${DOCKER_HUB_PSW}".bytes.encodeBase64().toString()
+                    }
+                }
+            }"""
+            writeFile file: "${WORKSPACE}/docker-config.json", text: dockerConfigJson
+        }
     }
+
+    // Define Kaniko command using the temporary Docker config file
+    def kanikoCommand = """
+        /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile \
+                         --context `pwd` \
+                         --destination "aswinvj/test:1.0.${BUILD_NUMBER}" \
+                         --dockerfile="${dockerFilePath}" \
+                         --config "${WORKSPACE}/docker-config.json"
+    """
+
+    // Execute the Kaniko command
+    def kanikoOutput = sh(script: kanikoCommand, returnStatus: true)
+
+    echo "Kaniko Exit Code: ${kanikoOutput}"
+
+    if (kanikoOutput != 0) {
+        error "Kaniko failed with exit code ${kanikoOutput}"
+    }
+
+    // Cleanup the temporary Docker config file
+    sh "rm -f ${WORKSPACE}/docker-config.json"
 }
 
 
