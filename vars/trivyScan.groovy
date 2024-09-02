@@ -28,20 +28,29 @@ def runTrivyCommand(String command) {
 
 def test() {
     script {
-                    def tplContent = libraryResource "trivy/html.tpl"
-                    writeFile file: "${WORKSPACE}/html.tpl", text: tplContent
+        def tplContent = libraryResource "trivy/html.tpl"
+        writeFile file: "${WORKSPACE}/html.tpl", text: tplContent
 
-                    def trivyConfigContent = libraryResource "trivy/trivy.yml"
-                    writeFile file: "${WORKSPACE}/trivy.yml", text: trivyConfigContent
-                }
+        def trivyConfigContent = libraryResource "trivy/trivy.yml"
+        writeFile file: "${WORKSPACE}/trivy.yml", text: trivyConfigContent
 
-    def command = "trivy image --config ${WORKSPACE}/trivy.yml --format template --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html --input ${WORKSPACE}/${BUILD_NUMBER}.tar"
-    def exitCode = sh(script: command, returnStatus: true)
-    def trivyOutput = sh(script: command, returnStdout: true).trim()
+        def command = "trivy image --config ${WORKSPACE}/trivy.yml --format template --template '@${WORKSPACE}/html.tpl' -o ${WORKSPACE}/trivy-report.html --input ${WORKSPACE}/${BUILD_NUMBER}.tar"
 
-    echo "Trivy Scan Results:"
-    echo trivyOutput
+        def result = sh(script: command, returnStatus: true, returnStdout: true).trim()
+
+        echo "Trivy Scan Results:"
+        echo result
+
+        if (result.exitCode != 0) {
+            error "Trivy scan encountered issues. Review the report at: ${WORKSPACE}/trivy-report.html"
+        } else {
+            echo "Trivy scan completed successfully with no critical vulnerabilities."
+        }
+
+        return result.exitCode
+    }
 }
+
 
 def kaniko() {
     try {
