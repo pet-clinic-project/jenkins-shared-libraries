@@ -1,8 +1,6 @@
 cache-dir: /tmp/trivy-cache
 format: template
 timeout: 10m
-dependency-tree: true
-list-all-pkgs: true
 exit-code: 1
 severity:
   - CRITICAL
@@ -12,13 +10,14 @@ scan:
     - /lib
     - /usr/lib
     - /usr/include
-  security-checks:
+  scanners:
     - vuln
     - secret
 vulnerability:
-  type:
+  ignore-unfixed: true
+pkg:
+  types:
     - os
     - library
-  ignore-unfixed: true
 db:
   skip-update: false
