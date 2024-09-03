@@ -20,11 +20,11 @@ def build() {
     }
 }
 
-def push() {
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+def push(String credentialsId = 'docker-hub-credentials') {
+    withCredentials([usernamePassword(credentialsId: credentialsId, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
         
-        // Generate base64 encoded auth string
-        def encodedAuth = sh(script: "echo -n ${DOCKER_USERNAME}:${DOCKER_PASSWORD} | base64", returnStdout: true).trim()
+        // Generate base64 encoded auth string using Groovy
+        def encodedAuth = "${DOCKER_USERNAME}:${DOCKER_PASSWORD}".bytes.encodeBase64().toString()
 
         // Create config.json content
         def dockerConfigJson = """
@@ -42,18 +42,17 @@ def push() {
 
         // Define Kaniko command to build and push the image
         def kanikoCommand = """
-            /kaniko/executor --dockerfile=${WORKSPACE}/Dockerfile \
-                             --context=${WORKSPACE} \
-                             --destination=aswinvj/test:1.0.${BUILD_NUMBER}
+            /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile" \
+                             --context 'pwd' \
+                             --destination aswinvj/test:1.0
         """
-
         // Execute the Kaniko command
-        def kanikoOutput = sh(script: kanikoCommand, returnStatus: true)
+        def kanikoOutput = sh(script: kanikoCommand, returnStdout: true, returnStatus: true)
 
-        echo "Kaniko Exit Code: ${kanikoOutput}"
+        echo "Kaniko Exit Code: ${kanikoOutput.status}"
 
-        if (kanikoOutput != 0) {
-            error "Kaniko failed with exit code ${kanikoOutput}"
+        if (kanikoOutput.status != 0) {
+            error "Kaniko failed with exit code ${kanikoOutput.status}. Output: ${kanikoOutput.stdout}"
         }
     }
 }
