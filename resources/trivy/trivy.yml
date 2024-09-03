@@ -3,7 +3,7 @@ format: template
 timeout: 10m
 exit-code: 1
 severity:
-  - high
+  - HIGH
   - CRITICAL
 scan:
   skip-dirs:
