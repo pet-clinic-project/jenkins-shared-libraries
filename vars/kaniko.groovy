@@ -65,14 +65,21 @@ def push(String credentialsId = 'docker-hub-credentials', String destination = '
 }
 
 def test() {
-        withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
-            script {
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
+        script {
+            try {
                 sh """
                     echo '{"auths":{"https://index.docker.io/v1/":{"auth":"'"\$(echo -n ${DOCKER_HUB_USR}:${DOCKER_HUB_PSW} | base64)"'"}}}' > /kaniko/.docker/config.json
-                    /kaniko/executor --dockerfile="/Dockerfile" --context "." --destination "aswinvj/test:1.0"
+                    /kaniko/executor --dockerfile="/Dockerfile" --context "." --destination "aswinvj/test:2.0"
                 """
+            } catch (Exception e) {
+                echo "Error occurred during Kaniko build and push: ${e.getMessage()}"
+                currentBuild.result = 'FAILURE'
+                throw e
             }
+        }
     }
 }
+
 
 
