@@ -70,7 +70,7 @@ def test() {
             script {
                 sh """
                     echo '{"auths":{"https://index.docker.io/v1/":{"auth":"'"\$(echo -n ${DOCKER_HUB_USR}:${DOCKER_HUB_PSW} | base64)"'"}}}' > /kaniko/.docker/config.json
-                    /kaniko/executor --dockerfile="/Dockerfile" --context "." --destination "techiescamp/jenkins-java-app:1.0.0"
+                    /kaniko/executor --dockerfile="/Dockerfile" --context "." --destination "aswinvj/test:1.0"
                 """
             }
         }
