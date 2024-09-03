@@ -26,7 +26,7 @@ def push(String registryName, String imageTag, String registryCred) {
             try {
                 sh """
                     echo '{"auths":{"https://index.docker.io/v1/":{"auth":"'"\$(echo -n ${DOCKER_HUB_USR}:${DOCKER_HUB_PSW} | base64)"'"}}}' > /kaniko/.docker/config.json
-                    /kaniko/executor --dockerfile="/Dockerfile" --context "." --destination "${registryName}/${imageTag}"
+                    /kaniko/executor --dockerfile="/Dockerfile" --context "." --destination "${registryName}:${imageTag}"
                 """
             } catch (Exception e) {
                 echo "Error occurred during Kaniko build and push: ${e.getMessage()}"
