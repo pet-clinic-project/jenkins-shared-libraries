@@ -65,7 +65,6 @@ def push(String credentialsId = 'docker-hub-credentials', String destination = '
 }
 
 def test() {
-    container('kaniko') {
         withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
             script {
                 sh """
@@ -73,7 +72,6 @@ def test() {
                     /kaniko/executor --dockerfile="/Dockerfile" --context "." --destination "aswinvj/test:1.0"
                 """
             }
-        }
     }
 }
 
