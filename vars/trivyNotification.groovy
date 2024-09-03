@@ -4,20 +4,25 @@ def call(String reportPath, String recipient) {
 
         def buildStatus = currentBuild.currentResult
         def statusColor = buildStatus == 'SUCCESS' ? 'green' : 'red'
-        def headerColor = buildStatus == 'SUCCESS' ? '#28a745' : '#dc3545' // Green for success, red for failure
+        def headerColor = buildStatus == 'SUCCESS' ? '#28a745' : '#dc3545'
 
         tplContent = tplContent.replace('${BUILD_STATUS}', buildStatus)
                                .replace('${STATUS_COLOR}', statusColor)
-                               .replace('${HEADER_COLOR}', headerColor) // Replace the header color
+                               .replace('${HEADER_COLOR}', headerColor)
 
         writeFile file: "${WORKSPACE}/notify.tpl", text: tplContent
     }
 
-    def email = emailext(
+    def emailParams = [
         subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}",
         body: readFile("${WORKSPACE}/notify.tpl"),
         to: recipient,
-        mimeType: 'text/html',
-        attachmentsPattern: reportPath
-    )
+        mimeType: 'text/html'
+    ]
+
+    if (currentBuild.currentResult != 'SUCCESS') {
+        emailParams['attachmentsPattern'] = reportPath
+    }
+
+    emailext emailParams
 }
