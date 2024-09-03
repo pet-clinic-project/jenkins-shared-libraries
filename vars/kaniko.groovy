@@ -44,7 +44,7 @@ def push() {
         def kanikoCommand = """
             /kaniko/executor --dockerfile=${WORKSPACE}/Dockerfile \
                              --context=${WORKSPACE} \
-                             --destination=${DOCKER_USERNAME}/test:1.0.${BUILD_NUMBER}
+                             --destination=aswinvj/test:1.0.${BUILD_NUMBER}
         """
 
         // Execute the Kaniko command
