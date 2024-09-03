@@ -65,14 +65,23 @@ def push(String credentialsId = 'docker-hub-credentials', String destination = '
 }
 
 def test() {
-        withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
-            script {
-                sh """
-                    echo '{"auths":{"https://index.docker.io/v1/":{"auth":"'"\$(echo -n ${DOCKER_HUB_USR}:${DOCKER_HUB_PSW} | base64)"'"}}}' > /kaniko/.docker/config.json
-                    /kaniko/executor --dockerfile="/Dockerfile" --context "." --destination "aswinvj/test:1.0"
-                """
-            }
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
+        script {
+            // Log in to Docker Hub
+            sh """
+                echo "${DOCKER_HUB_PSW}" | docker login -u "${DOCKER_HUB_USR}" --password-stdin
+            """
+            // Run the Kaniko executor to build and push the image
+            sh """
+                /kaniko/executor \
+                --dockerfile="/Dockerfile" \
+                --context="." \
+                --destination="aswinvj/test:1.0" \
+                --cleanup
+            """
+        }
     }
 }
+
 
 
