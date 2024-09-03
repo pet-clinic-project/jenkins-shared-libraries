@@ -37,16 +37,14 @@ def push(String credentialsId = 'docker-hub-credentials', String destination = '
         }
         """
         
-        // Write Docker config to a temporary file in the workspace
-        def configFile = "${WORKSPACE}/docker-config.json"
-        writeFile file: configFile, text: dockerConfigJson
+        // Write Docker config to the Kaniko config location within the pod
+        writeFile file: '/kaniko/.docker/config.json', text: dockerConfigJson
 
         // Define Kaniko command to build and push the image
         def kanikoCommand = """
             /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile" \
                              --context="${WORKSPACE}" \
-                             --destination=${destination} \
-                             --dockerconfig="${configFile}"
+                             --destination=${destination}
         """
         
         try {
@@ -60,8 +58,8 @@ def push(String credentialsId = 'docker-hub-credentials', String destination = '
                 error "Kaniko failed with exit code ${kanikoOutput.status}. Output: ${kanikoOutput.stdout}"
             }
         } finally {
-            // Clean up the temporary config file
-            sh "rm -f ${configFile}"
+            // Clean up the config file if needed
+            sh "rm -f /kaniko/.docker/config.json"
         }
     }
 }
