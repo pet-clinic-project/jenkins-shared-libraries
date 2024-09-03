@@ -20,7 +20,7 @@ def build() {
     }
 }
 
-def push(String credentialsId = 'docker-hub-credentials') {
+def push(String credentialsId = 'docker-hub-credentials', String destination = 'aswinvj/test:1.0') {
     withCredentials([usernamePassword(credentialsId: credentialsId, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
         
         // Generate base64 encoded auth string using Groovy
@@ -37,22 +37,31 @@ def push(String credentialsId = 'docker-hub-credentials') {
         }
         """
         
-        // Write Docker config to the Kaniko config location within the pod
-        writeFile file: '/kaniko/.docker/config.json', text: dockerConfigJson
+        // Write Docker config to a temporary file in the workspace
+        def configFile = "${WORKSPACE}/docker-config.json"
+        writeFile file: configFile, text: dockerConfigJson
 
         // Define Kaniko command to build and push the image
         def kanikoCommand = """
             /kaniko/executor --dockerfile="${WORKSPACE}/Dockerfile" \
-                             --context 'pwd' \
-                             --destination aswinvj/test:1.0
+                             --context="${WORKSPACE}" \
+                             --destination=${destination} \
+                             --dockerconfig="${configFile}"
         """
-        // Execute the Kaniko command
-        def kanikoOutput = sh(script: kanikoCommand, returnStdout: true, returnStatus: true)
+        
+        try {
+            // Execute the Kaniko command
+            def kanikoOutput = sh(script: kanikoCommand, returnStdout: true, returnStatus: true)
 
-        echo "Kaniko Exit Code: ${kanikoOutput.status}"
+            echo "Kaniko Exit Code: ${kanikoOutput.status}"
+            echo "Kaniko Output: ${kanikoOutput.stdout}"
 
-        if (kanikoOutput.status != 0) {
-            error "Kaniko failed with exit code ${kanikoOutput.status}. Output: ${kanikoOutput.stdout}"
+            if (kanikoOutput.status != 0) {
+                error "Kaniko failed with exit code ${kanikoOutput.status}. Output: ${kanikoOutput.stdout}"
+            }
+        } finally {
+            // Clean up the temporary config file
+            sh "rm -f ${configFile}"
         }
     }
 }
