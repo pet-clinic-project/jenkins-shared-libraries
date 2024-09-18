@@ -19,3 +19,18 @@ def tfLint(project_dir, tflintConfig, tfvarsFile) {
       sh tfLintCommand
    }   
 }
+
+def test(String directory) {
+      script {
+         def tflintCommand = "tflint --chdir=${directory}"
+
+         def tflintOutput = sh(script: tflintCommand, returnStatus: true)
+
+         echo "Tflint Exit Code: ${tflintOutput}"
+
+         if (tflintOutput != 0) {
+               error "Tflint failed with exit code ${tflintOutput}"
+         }
+      }
+}
+
