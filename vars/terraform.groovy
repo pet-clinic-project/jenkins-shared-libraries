@@ -32,3 +32,35 @@ def plan(String directory) {
         }
     }
 }
+
+def apply(String directory) {
+    script {
+        def terraformApplyCommand = """
+            terraform -chdir=${directory} apply -auto-approve
+        """
+
+        def terraformApplyOutput = sh(script: terraformApplyCommand, returnStatus: true)
+
+        echo "Terraform Apply Exit Code: ${terraformApplyOutput}"
+
+        if (terraformApplyOutput != 0) {
+            error "Terraform apply failed with exit code ${terraformApplyOutput}"
+        }
+    }
+}
+
+def destroy(String directory) {
+    script {
+        def terraformDestroyCommand = """
+            terraform -chdir=${directory} destroy -auto-approve
+        """
+
+        def terraformDestroyOutput = sh(script: terraformDestroyCommand, returnStatus: true)
+
+        echo "Terraform Destroy Exit Code: ${terraformDestroyOutput}"
+
+        if (terraformDestroyOutput != 0) {
+            error "Terraform destroy failed with exit code ${terraformDestroyOutput}"
+        }
+    }
+}
