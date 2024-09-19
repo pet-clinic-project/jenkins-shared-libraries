@@ -1,5 +1,5 @@
 def sendEmailNotification(String pipelineStatus, String recipientEmail) {
-    def buildNotification = libraryResource 'notification/notify.tpl'
+    def buildNotification = libraryResource 'org/dcube/notification/notify.tpl'
     def subject, body
 
     if (pipelineStatus == 'success') {

@@ -1,6 +1,6 @@
 def call(Map params) {
    def projectDirectory = params.projectDirectory
-   def tflintConfig = libraryResource("tflint/tflint.hcl")
+   def tflintConfig = libraryResource("org/dcube/tflint/tflint.hcl")
    
    // Set the value of tfvarsFile using the parameter
    def tfvarsFile = params.tfvarsFile
